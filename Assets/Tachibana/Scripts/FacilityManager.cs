@@ -4,15 +4,42 @@ using UnityEngine;
 
 public class FacilityManager : MonoBehaviour
 {
+    public static FacilityManager I;
+
     [SerializeField]
     int MapSize = 5;
 
     [SerializeField]
     GameObject m_facilityPrefab;
 
-    Facility[][] m_facility;
+ 
+    public Sprite m_PublicBath;
+   
+    public Sprite m_Aquaculture;
 
-	void Start ()
+    public Sprite m_PowerPlant;
+
+    public FacilityType SelectFacilityType;
+
+    Facility[][] m_facility;
+    
+    public void SetPublicBath()
+    {
+        SelectFacilityType = FacilityType.PublicBath;
+    }
+
+    public void SetAquaculture()
+    {
+        SelectFacilityType = FacilityType.Aquaculture;
+    }
+
+    public void SetPowerPlant()
+    {
+        SelectFacilityType = FacilityType.PowerPlant;
+    }
+
+
+    void Start ()
     {
         m_facility = new Facility[MapSize][];
         for(int i=0;i<  m_facility.Length; i++)
@@ -20,13 +47,14 @@ public class FacilityManager : MonoBehaviour
             m_facility[i] = new Facility[MapSize];
         }
         CreateMap();
+        I = this;
 	}
 
     void CreateMap()
     {
         Vector2 vec = new Vector2(3,30);
         vec.Normalize();
-        float dis = 50;
+        float dis = 100;
 
         Vector2 offset = new Vector2(-100,-100);
 
@@ -43,4 +71,5 @@ public class FacilityManager : MonoBehaviour
         }
     }
 	
+
 }

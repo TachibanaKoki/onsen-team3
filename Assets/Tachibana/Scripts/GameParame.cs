@@ -1,10 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameParame : MonoBehaviour
 {
     public static GameParame I;
+
+    public int PublicBathCost = 100;
+
+    public int AquacultureCost = 10;
+
+    public int PowerPlantCost = 100;
 
     private int m_money;
     public int Money
@@ -21,10 +28,14 @@ public class GameParame : MonoBehaviour
         set { m_unagi = value; }
     }
 
+    [SerializeField]
+    Text MoneyInHand;
+
+    [SerializeField]
+    Text UnagiInHand;
 
 
-
-	void Start ()
+    void Start ()
     {
 		if(I!=null )
         {
@@ -38,7 +49,18 @@ public class GameParame : MonoBehaviour
             Money = PlayerPrefs.GetInt("Money");
             Unagi = PlayerPrefs.GetInt("Unagi");
         }
+        else
+        {
+            Money = 1000;
+            Unagi = 100;
+        }
 	}
+
+    void Update()
+    {
+        MoneyInHand.text = m_money.ToString();
+        UnagiInHand.text = m_unagi.ToString();
+    }
 
     void OnDestory()
     {
