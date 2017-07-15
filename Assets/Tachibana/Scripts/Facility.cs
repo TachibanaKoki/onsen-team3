@@ -11,7 +11,8 @@ public enum FacilityType
     PowerPlant
 }
 
-public class Facility : MonoBehaviour {
+public class Facility : MonoBehaviour
+{
 
     public RectTransform rectTransform;
     public FacilityType facilityType = FacilityType.None;
@@ -62,10 +63,10 @@ public class Facility : MonoBehaviour {
     {
 
         //todo 施設開拓中
-        if (true)
+        if (GameSystem.I.NowState == GameSystem.GameState.Installation)
         {
- 
-            if (FacilityManager.I.SelectFacilityType == FacilityType.None) return;
+            //すでに施設がある
+            if (facilityType != FacilityType.None) return;
 
             //施設設置
             if (FacilityManager.I.SelectFacilityType == FacilityType.PublicBath)
@@ -89,7 +90,7 @@ public class Facility : MonoBehaviour {
             SetFaciltyType(FacilityManager.I.SelectFacilityType);
         }
         //todo 営業中
-        else
+        else if(GameSystem.I.NowState == GameSystem.GameState.Practice)
         {
             //if(facilityType==FacilityType.PowerPlant)
             //{
