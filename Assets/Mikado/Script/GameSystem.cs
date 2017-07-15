@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameSystem : MonoBehaviour
 {
+    public static GameSystem I;
+
 
     public enum GameState
     {
@@ -32,7 +34,15 @@ public class GameSystem : MonoBehaviour
         get { return canPush; }
     }
 
-
+    void Awake()
+    {
+        if(I!=null)
+        {
+            Destroy(I);
+            I = null;
+        }
+        I = this;
+    }
 
     // Use this for initialization
     void Start()
