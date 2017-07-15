@@ -32,15 +32,23 @@ public class GameParame : MonoBehaviour
             I = null;
         }
         I = this;
+
+        if(PlayerPrefs.HasKey("Money"))
+        {
+            Money = PlayerPrefs.GetInt("Money");
+            Unagi = PlayerPrefs.GetInt("Unagi");
+        }
 	}
 
     void OnDestory()
     {
         I = null;
     }
-	
-	void Update ()
+
+    public void Save()
     {
-		
-	}
+        PlayerPrefs.SetInt("Money",m_money);
+        PlayerPrefs.SetInt("Unagi",m_unagi);
+        PlayerPrefs.Save();
+    }
 }
