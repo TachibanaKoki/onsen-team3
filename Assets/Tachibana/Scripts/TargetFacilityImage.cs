@@ -22,17 +22,17 @@ public class TargetFacilityImage : MonoBehaviour
 		if(FacilityManager.I.SelectFacilityType == FacilityType.PowerPlant)
         {
             m_targetImage.sprite = FacilityManager.I.m_PowerPlant;
-            m_costText.text = "コスト："+GameParame.I.PowerPlantCost.ToString();
+            m_costText.text = GameParame.I.PowerPlantCost.ToString();
         }
         else if(FacilityManager.I.SelectFacilityType == FacilityType.PublicBath)
         {
             m_targetImage.sprite = FacilityManager.I.m_PublicBath;
-            m_costText.text = "コスト：" + GameParame.I.PublicBathCost.ToString();
+            m_costText.text =  GameParame.I.PublicBathCost.ToString();
         }
         else if(FacilityManager.I.SelectFacilityType == FacilityType.Aquaculture)
         {
             m_targetImage.sprite = FacilityManager.I.m_Aquaculture;
-            m_costText.text = "コスト：" + GameParame.I.AquacultureCost.ToString();
+            m_costText.text = GameParame.I.AquacultureCost.ToString();
         }
 	}
 }

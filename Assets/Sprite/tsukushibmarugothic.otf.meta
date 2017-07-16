@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 3a2ceb3e82b93674785f09fad93fddaf
+timeCreated: 1500200707
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Tsukushi B Round Gothic
+  fontNames:
+  - Tsukushi B Round Gothic
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -58,7 +58,7 @@ public class PinchinPinchOut : MonoBehaviour
             }
         }
 #else
-        UpdateScaling(transform.localScale.x+ Input.GetAxis("Mouse ScrollWheel"));
+        UpdateScaling(transform.localScale.x + Input.GetAxis("Mouse ScrollWheel"));
 #endif
     }
 
@@ -70,4 +70,4 @@ public class PinchinPinchOut : MonoBehaviour
         rt.localScale = new Vector2(argScale, argScale);
     }
 
-    }
+}

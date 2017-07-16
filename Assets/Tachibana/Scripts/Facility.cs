@@ -76,6 +76,7 @@ public class Facility : MonoBehaviour
 
     public void SetFaciltyType(FacilityType facType)
     {
+        m_Image.color = Color.white;
         if(facType==FacilityType.PublicBath)
         {
             m_Image.sprite = FacilityManager.I.m_PublicBath;
@@ -90,6 +91,7 @@ public class Facility : MonoBehaviour
         }
         else
         {
+            m_Image.color = new Color(1,1,1,0.5f);
             m_Image.sprite = null;
         }
         facilityType = facType;
@@ -129,10 +131,12 @@ public class Facility : MonoBehaviour
         //todo 営業中
         else if(GameSystem.I.NowState == GameSystem.GameState.Practice)
         {
-            //if (facilityType == FacilityType.PowerPlant)
-            //{
-            //    facilityAction.Update();
-            //}
+            if (facilityType == FacilityType.PowerPlant)
+            {
+                PowerPlant pp = (PowerPlant)facilitybase;
+                pp.ChageUnagi(10);
+                GameObject.Instantiate(EffectDatas.I.ChargeEffect,gameObject.transform.position,Quaternion.identity);
+            }
         }
     }
 
