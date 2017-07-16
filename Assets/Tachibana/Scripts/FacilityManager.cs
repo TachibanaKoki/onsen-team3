@@ -137,6 +137,7 @@ public class FacilityManager : MonoBehaviour
             {
                 m_facility[i][j] = GameObject.Instantiate(m_facilityPrefab).GetComponent<Facility>();
                 m_facility[i][j].transform.SetParent(transform);
+                m_facility[i][j].transform.localScale = Vector3.one;
                 m_facility[i][j].Initialize(i,j);
                 Vector2 v = vec*i*dis;
                 m_facility[i][j].rectTransform.anchoredPosition = offset+ v +new Vector2(vec.y,0- vec.x) * j*dis;
