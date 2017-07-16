@@ -41,6 +41,8 @@ public class GrreadUpPanel : MonoBehaviour
         moneyCost.text = GameParame.I.GreadUpMoney.ToString();
         unagiCost.text = GameParame.I.GreadUpUnagi.ToString();
         m_facilityImage.sprite = FacilityManager.I.GetFacilityImage(targetFacility.facilityType);
+
+
     }
 
 	public void Close()

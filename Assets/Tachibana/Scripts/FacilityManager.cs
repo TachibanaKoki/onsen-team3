@@ -34,8 +34,9 @@ public class FacilityManager : MonoBehaviour
 
     public Sprite m_PowerPlant;
 
+    public Sprite m_SetDigging;//セットし掘る方
 
-
+    public Sprite m_Dig;//掘ってる途中
 
     public FacilityType SelectFacilityType;
 
@@ -52,9 +53,6 @@ public class FacilityManager : MonoBehaviour
 
     [SerializeField]
     Text m_messageBox;
-
-
-
 
     public void SetMessage(string text)
     {
@@ -75,13 +73,16 @@ public class FacilityManager : MonoBehaviour
         {
             return FacilityManager.I.m_Aquaculture;
         }
+        else if(state==FacilityType.Dig)
+        {
+            return FacilityManager.I.m_SetDigging;
+        }
         else
         {
 
         }
         return null;
     }
-    
     
     public void SetPublicBath()
     {
@@ -118,12 +119,11 @@ public class FacilityManager : MonoBehaviour
 
     public void SelectDig()
     {
-        SelectFacilityType = FacilityType.Digging;
         if (GameSystem.I.NowState != GameSystem.GameState.Installation) return;
         m_createFacilityState = CreateFacilityState.Dig;
-
         m_construction.SetActive(false);
 
+        MessageSystem.I.SetMessage("掘りたい場所を選んでください",2f);
     }
 
     void Awake()
@@ -171,10 +171,13 @@ public class FacilityManager : MonoBehaviour
         m_facility[2][1].CreateAquaculture();
     }
 
-
-    public void MoneyUpPush()
+    
+    public void PushDigOkButton()
     {
         SelectFacility.GetComponent<Facility>().MoneyPush();
     }
-
+    public void PushDigNOButton()
+    {
+        digUi.SetActive(false);
+    }
 }

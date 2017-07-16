@@ -9,7 +9,9 @@ public enum FacilityType
     PublicBath,
     Aquaculture,
     PowerPlant,
-    Digging
+    Dig,//掘り途中状態
+    DigSet,//掘るをセットされた状態
+    
 }
 
 [System.Serializable]
@@ -36,7 +38,7 @@ public class Facility : MonoBehaviour
 
 
     public int setMoney = 0;
-    public int setUnag = 0;
+    public int setUnagi = 0;
 
     Image m_Image;
 
@@ -57,6 +59,18 @@ public class Facility : MonoBehaviour
         {
             facilitybase.Update();
         }
+        else if (GameSystem.I.NowState == GameSystem.GameState.dig)
+        {
+            //営業終わって掘るだったらdigに戻す
+            if (FacilityType.DigSet == facilityType)
+            {
+                facilityType = FacilityType.Dig;
+                SetFaciltyType(FacilityType.Dig);
+            }
+        }
+
+
+   
     }
 
     public void Reset()
@@ -94,6 +108,14 @@ public class Facility : MonoBehaviour
         {
             m_Image.sprite = FacilityManager.I.m_Aquaculture;
         }
+        else if (facType == FacilityType.Dig)
+        {
+            m_Image.sprite = FacilityManager.I.m_Dig;
+        }
+        else if (facType == FacilityType.DigSet)
+        {
+            m_Image.sprite = FacilityManager.I.m_SetDigging;
+        }
         else
         {
             m_Image.color = new Color(1, 1, 1, 0.5f);
@@ -110,8 +132,9 @@ public class Facility : MonoBehaviour
         if (GameSystem.I.NowState == GameSystem.GameState.Installation)
         {
             //すでに施設がある
-            if (facilityType != FacilityType.None)
+            if (facilityType != FacilityType.None&& facilityType != FacilityType.Dig && facilityType != FacilityType.DigSet)
             {
+                FacilityManager.I.digUi.SetActive(false);
                 GrreadUpPanel.I.Open(this);
                 return;
             }
@@ -131,12 +154,21 @@ public class Facility : MonoBehaviour
                     CreateAquaculture();
                 }
             }
-            if (FacilityManager.I.m_createFacilityState == CreateFacilityState.Dig)
+             if (FacilityManager.I.m_createFacilityState == CreateFacilityState.Dig)
             {
-                if (FacilityManager.I.SelectFacilityType == FacilityType.Digging)
+                if (facilityType==FacilityType.None|| facilityType == FacilityType.Dig)
                 {
                     CreateDigging();
                 }
+                else
+                {
+                    FacilityManager.I.digUi.SetActive(false);
+                }
+                
+            }
+            else
+            {
+                FacilityManager.I.digUi.SetActive(false);
             }
 
 
@@ -145,6 +177,7 @@ public class Facility : MonoBehaviour
         else if (GameSystem.I.NowState == GameSystem.GameState.Practice)
         {
 
+
         }
     }
 
@@ -152,40 +185,30 @@ public class Facility : MonoBehaviour
     private void SetDigText()
     {
         FacilityManager.I.digUi.transform.Find("MoneyText").gameObject.GetComponent<Text>().text = "お金 " + setMoney;
-        FacilityManager.I.digUi.transform.Find("UnagiText").gameObject.GetComponent<Text>().text = "うなぎ " + setUnag;
+        FacilityManager.I.digUi.transform.Find("UnagiText").gameObject.GetComponent<Text>().text = "うなぎ " + setUnagi;
     }
 
     public void MoneyPush()
     {
 
         var g = this.GetComponentInChildren<DigContents>();
-        Debug.Log(g.canDig);
-        if (g.canDig == true)
+
+
+        if (GameParame.I.Money - DigContents.c_costMoney * g.NowDig >= 0 && GameParame.I.Unagi - DigContents.c_costUnagi * g.NowDig >= 0)
         {
-            Debug.Log("add money");
-            GameParame.I.Money += DigContents.c_costMoney * g.NowDig;
-            GameParame.I.Unagi += DigContents.c_costUnagi * g.NowDig;
-            g.canDig = false;
+            GameParame.I.Money -= DigContents.c_costMoney * g.NowDig;
+            GameParame.I.Unagi -= DigContents.c_costUnagi * g.NowDig;
+            g.canDig = true;
+            SetFaciltyType(FacilityType.DigSet);
+            FacilityManager.I.digUi.SetActive(false);
+            facilityType = FacilityType.DigSet;
         }
         else
         {
 
-            if (GameParame.I.Money - DigContents.c_costMoney * g.NowDig >= 0 && GameParame.I.Unagi - DigContents.c_costUnagi * g.NowDig >= 0)
-            {
-                Debug.Log("remove money");
-                GameParame.I.Money -= DigContents.c_costMoney * g.NowDig;
-                GameParame.I.Unagi -= DigContents.c_costUnagi * g.NowDig;
-                g.canDig = true;
-            }
-
+            MessageSystem.I.SetMessage("必要資源が足りない");
         }
 
-        if (g.canDig)
-            FacilityManager.I.digUi.transform.Find("DigText").gameObject.GetComponent<Text>().color = Color.red;
-        else
-            FacilityManager.I.digUi.transform.Find("DigText").gameObject.GetComponent<Text>().color = Color.black;
-
-        SetDigText();
     }
 
     public bool CreatePublicBath()
@@ -240,19 +263,14 @@ public class Facility : MonoBehaviour
     void CreateDigging()
     {
         var g = this.GetComponentInChildren<DigContents>();
+
+        Debug.Log("DegCount"+g.NowDig);
         setMoney = g.NowDig * DigContents.c_costMoney;
-        setUnag = g.NowDig * DigContents.c_costUnagi;
+        setUnagi = g.NowDig * DigContents.c_costUnagi;
 
         FacilityManager.I.SelectFacility = this;
         FacilityManager.I.digUi.SetActive(true);
         SetDigText();
-
-        if (g.canDig)
-            FacilityManager.I.digUi.transform.Find("DigText").gameObject.GetComponent<Text>().color = Color.red;
-        else
-            FacilityManager.I.digUi.transform.Find("DigText").gameObject.GetComponent<Text>().color = Color.black;
-
-
 
     }
     public void CreateAquaculture()

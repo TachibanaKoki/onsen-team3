@@ -160,6 +160,7 @@ public class GameSystem : MonoBehaviour
         }
         else if(nowState==GameState.Practice)
         {
+            FacilityManager.I.digUi.SetActive(false);
             MessageSystem.I.SetMessage("さあ、今日の仕事を始めようぞ");
             if(practiceCallback!=null)practiceCallback.Invoke();
         }

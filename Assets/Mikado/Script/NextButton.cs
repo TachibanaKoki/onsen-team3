@@ -32,7 +32,6 @@ public class NextButton : MonoBehaviour
         if (gameSytemObject.GetComponent<GameSystem>().CanPush)
             gameSytemObject.GetComponent<GameSystem>().NextButton();
 
-
     }
 
 
@@ -51,6 +50,7 @@ public class NextButton : MonoBehaviour
                 image.sprite = m_OpenSprite;
                 m_backImage.sprite = m_OpenSprite;
                 image.fillAmount = 1.0f;
+             
                 break;
 
 

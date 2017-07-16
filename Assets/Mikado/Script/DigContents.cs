@@ -62,17 +62,18 @@ public class DigContents : MonoBehaviour
         {
             case GameSystem.GameState.Installation:
             case GameSystem.GameState.Practice:
-                if (facilityObjectParent.GetComponent<Facility>().facilityType != FacilityType.None && facilityObjectParent.GetComponent<Facility>().facilityType != FacilityType.Digging)
+                if (facilityObjectParent.GetComponent<Facility>().facilityType != FacilityType.None && facilityObjectParent.GetComponent<Facility>().facilityType != FacilityType.Dig&& facilityObjectParent.GetComponent<Facility>().facilityType != FacilityType.DigSet)
                     Destroy(this);
                 old = true;
                 break;
 
 
             case GameSystem.GameState.dig:
-                if (old == true)//掘って獲得
+                if (old == true&&canDig==true)//掘って獲得
                 {
                     Dig();
                     old = false;
+                    canDig = false;
                 }
                 break;
         }
