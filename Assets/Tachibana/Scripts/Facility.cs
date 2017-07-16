@@ -57,6 +57,11 @@ public class Facility : MonoBehaviour
         {
             facilitybase.Update();
         }
+
+        if(Effect!=null)
+        {
+            Effect.transform.localScale = FacilityManager.I.transform.localScale;
+        }
     }
 
     public void Reset()
@@ -108,8 +113,6 @@ public class Facility : MonoBehaviour
 
     public void TapArea()
     {
-
-
         //todo 施設開拓中
         if (GameSystem.I.NowState == GameSystem.GameState.Installation)
         {
