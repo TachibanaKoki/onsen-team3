@@ -44,7 +44,7 @@ public class Facility : MonoBehaviour
     Slider slider;
 
 
-    
+
 
     void Awake()
     {
@@ -71,8 +71,8 @@ public class Facility : MonoBehaviour
         GreadLevel++;
     }
 
-	// Use this for initialization
- public void Initialize(int x,int y)
+    // Use this for initialization
+    public void Initialize(int x, int y)
     {
         Index = new IntVector2(x, y);
         rectTransform = GetComponent<RectTransform>();
@@ -82,7 +82,7 @@ public class Facility : MonoBehaviour
     public void SetFaciltyType(FacilityType facType)
     {
         m_Image.color = Color.white;
-        if(facType==FacilityType.PublicBath)
+        if (facType == FacilityType.PublicBath)
         {
             m_Image.sprite = FacilityManager.I.m_PublicBath;
         }
@@ -96,7 +96,7 @@ public class Facility : MonoBehaviour
         }
         else
         {
-            m_Image.color = new Color(1,1,1,0.5f);
+            m_Image.color = new Color(1, 1, 1, 0.5f);
             m_Image.sprite = null;
         }
         facilityType = facType;
@@ -115,25 +115,28 @@ public class Facility : MonoBehaviour
                 GrreadUpPanel.I.Open(this);
                 return;
             }
-            if (FacilityManager.I.m_createFacilityState != CreateFacilityState.Create) return;
-
-
-            //施設設置
-            if (FacilityManager.I.SelectFacilityType == FacilityType.PublicBath)
+            if (FacilityManager.I.m_createFacilityState == CreateFacilityState.Create)
             {
-                if (!CreatePublicBath()) return;
+                //施設設置
+                if (FacilityManager.I.SelectFacilityType == FacilityType.PublicBath)
+                {
+                    if (!CreatePublicBath()) return;
+                }
+                else if (FacilityManager.I.SelectFacilityType == FacilityType.PowerPlant)
+                {
+                    CreatePowerPlant();
+                }
+                else if (FacilityManager.I.SelectFacilityType == FacilityType.Aquaculture)
+                {
+                    CreateAquaculture();
+                }
             }
-            else if (FacilityManager.I.SelectFacilityType == FacilityType.PowerPlant)
+            if (FacilityManager.I.m_createFacilityState == CreateFacilityState.Dig)
             {
-                CreatePowerPlant();
-            }
-            else if (FacilityManager.I.SelectFacilityType == FacilityType.Aquaculture)
-            {
-                CreateAquaculture();
-            }
-            else if (FacilityManager.I.SelectFacilityType == FacilityType.Digging)
-            {
-                CreateDigging();
+                if (FacilityManager.I.SelectFacilityType == FacilityType.Digging)
+                {
+                    CreateDigging();
+                }
             }
 
 
@@ -193,7 +196,7 @@ public class Facility : MonoBehaviour
             return false;
         }
 
-        PowerPlant powerPlant=null;
+        PowerPlant powerPlant = null;
         bool isok = false;
         for (int i = -1; i < 2; i++)
         {
@@ -265,7 +268,7 @@ public class Facility : MonoBehaviour
         facilitybase.Start();
     }
 
-   public void CreatePowerPlant()
+    public void CreatePowerPlant()
     {
         if (GameParame.I.Money < GameParame.I.PowerPlantCost)
         {

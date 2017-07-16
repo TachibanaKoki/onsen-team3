@@ -141,7 +141,7 @@ public class FacilityManager : MonoBehaviour
 
         CreateMap();
         GameObject digOb = GameObject.Find("DigContentsSystem");
-        digOb.GetComponent<DigContentsSystem>().Initialize(MapSize);
+        digOb.GetComponent<DigContentsSystem>().Initialize(MapSizeY);
 
     }
 

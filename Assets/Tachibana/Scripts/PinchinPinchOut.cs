@@ -32,7 +32,7 @@ public class PinchinPinchOut : MonoBehaviour
 
             // タッチ開始時に初期値を取得
             RectTransform rt = this.GetComponent(typeof(RectTransform)) as RectTransform;
-            defaultScale = rt.sizeDelta.x;
+            defaultScale = transform.localScale.x;
 
             // タッチしている２点を取得
             Touch touch1 = Input.GetTouch(0);
