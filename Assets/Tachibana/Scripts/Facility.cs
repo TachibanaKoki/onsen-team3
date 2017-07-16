@@ -34,6 +34,9 @@ public class Facility : MonoBehaviour
 
     Image m_Image;
 
+    [SerializeField]
+    Slider slider;
+
 
     void Awake()
     {
@@ -106,9 +109,9 @@ public class Facility : MonoBehaviour
         //todo 営業中
         else if(GameSystem.I.NowState == GameSystem.GameState.Practice)
         {
-            //if(facilityType==FacilityType.PowerPlant)
+            //if (facilityType == FacilityType.PowerPlant)
             //{
-            //    facilityAction.Update();            
+            //    facilityAction.Update();
             //}
         }
     }
@@ -117,6 +120,7 @@ public class Facility : MonoBehaviour
     {
         if (GameParame.I.Money < GameParame.I.PublicBathCost) return false;
 
+        PowerPlant powerPlant=null;
         bool isok = false;
         for (int i = -1; i < 2; i++)
         {
@@ -134,6 +138,7 @@ public class Facility : MonoBehaviour
 
                 if (FacilityManager.I.m_facility[(int)index.x][(int)index.y].facilityType == FacilityType.PowerPlant)
                 {
+                    powerPlant = (PowerPlant)FacilityManager.I.m_facility[(int)index.x][(int)index.y].facilitybase;
                     Debug.Log("CreateBath");
                     isok = true;
                     break;
@@ -148,7 +153,9 @@ public class Facility : MonoBehaviour
 
         GameParame.I.Money -= GameParame.I.PublicBathCost;
         facilitybase = new onsen();
-        facilitybase.Start();
+        onsen onsen = (onsen)facilitybase;
+        onsen.powerPlant = powerPlant;
+        onsen.Start();
         SetFaciltyType(FacilityType.PublicBath);
         return true;
 
@@ -168,6 +175,11 @@ public class Facility : MonoBehaviour
         if (GameParame.I.Money < GameParame.I.PowerPlantCost) return;
         GameParame.I.Money -= GameParame.I.PowerPlantCost;
         SetFaciltyType(FacilityType.PowerPlant);
+        slider.gameObject.SetActive(true);
+        facilitybase = new PowerPlant();
+        PowerPlant power = (PowerPlant)facilitybase;
+        power.m_facility = slider;
+        power.Start();
     }
 
 }
