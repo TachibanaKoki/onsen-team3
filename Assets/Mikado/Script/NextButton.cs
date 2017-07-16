@@ -30,8 +30,8 @@ public class NextButton : MonoBehaviour
     public void ButtonPush()
     {
         if (gameSytemObject.GetComponent<GameSystem>().CanPush)
-        gameSytemObject.GetComponent<GameSystem>().NextButton();
- 
+            gameSytemObject.GetComponent<GameSystem>().NextButton();
+
 
     }
 
@@ -41,7 +41,7 @@ public class NextButton : MonoBehaviour
     {
 
 
-        GameSystem.GameState gameState = gameSytemObject.GetComponent<GameSystem>().NowState ;
+        GameSystem.GameState gameState = gameSytemObject.GetComponent<GameSystem>().NowState;
 
 
         switch (gameState)
@@ -60,23 +60,12 @@ public class NextButton : MonoBehaviour
                 image.fillAmount = GameSystem.I.m_PracticeProcessed;
                 break;
 
-
-
             case GameSystem.GameState.dig:
                 image.sprite = m_DigSprite;
                 m_backImage.sprite = m_DigSprite;
                 image.fillAmount = GameSystem.I.m_DigProcessed;
                 break;
-
-
         }
-
-
-
     }
 
-
-
-
-
-    }
+}
