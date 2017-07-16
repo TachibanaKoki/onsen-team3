@@ -155,6 +155,8 @@ MonoBehaviour:
     y: 0
   rectTransform: {fileID: 0}
   facilityType: 0
+  setMoney: 0
+  setUnag: 0
   slider: {fileID: 114479863252344986}
 --- !u!114 &114479863252344986
 MonoBehaviour:
@@ -190,7 +192,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 224980905489836662}
   m_HandleRect: {fileID: 0}
@@ -321,6 +323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a3eabd3952b244db633ebc8729f935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canDig: 0
 --- !u!222 &222363263964293956
 CanvasRenderer:
   m_ObjectHideFlags: 1
