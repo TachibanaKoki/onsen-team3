@@ -7,10 +7,24 @@ public class NextButton : MonoBehaviour
 {
 
     [SerializeField]
-    Text tx;
+    Image image;
+
+    [SerializeField]
+    Sprite m_OpenSprite;
+
+    [SerializeField]
+    Sprite m_RunnigSpirte;
+
+    [SerializeField]
+    Sprite m_DigSprite;
 
     [SerializeField]
     GameObject gameSytemObject;
+
+    void Start()
+    {
+        image = GetComponent<Image>();
+    }
 
     public void ButtonPush()
     {
@@ -33,21 +47,19 @@ public class NextButton : MonoBehaviour
         {
 
             case GameSystem.GameState.Installation:
-                tx.text = "Installation";
+                image.sprite = m_OpenSprite;
 
                 break;
 
 
             case GameSystem.GameState.Practice:
-                tx.text = "Practice";
-
+                image.sprite = m_RunnigSpirte;
                 break;
 
 
 
             case GameSystem.GameState.dig:
-                tx.text = "dig";
-
+                image.sprite = m_DigSprite;
                 break;
 
 
