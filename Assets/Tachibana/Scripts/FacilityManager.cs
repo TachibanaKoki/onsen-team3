@@ -24,21 +24,34 @@ public class FacilityManager : MonoBehaviour
     GameObject m_facilityPrefab;
 
  
+
     public Sprite m_PublicBath;
    
     public Sprite m_Aquaculture;
 
     public Sprite m_PowerPlant;
 
+
+
+
     public FacilityType SelectFacilityType;
 
     public Facility[][] m_facility;
+
+
+    public Facility SelectFacility;
 
     [SerializeField]
     GameObject m_construction;
 
     [SerializeField]
+    public GameObject digUi;
+
+    [SerializeField]
     Text m_messageBox;
+
+
+
 
     public void SetMessage(string text)
     {
@@ -62,7 +75,6 @@ public class FacilityManager : MonoBehaviour
         SelectFacilityType = FacilityType.PowerPlant;
     }
 
-
     public void SetCreateFacilityState(CreateFacilityState state)
     {
         m_createFacilityState = state;
@@ -74,15 +86,23 @@ public class FacilityManager : MonoBehaviour
 
     public void CreateFacility()
     {
+
         m_createFacilityState = CreateFacilityState.Create;
         m_construction.SetActive(true);
+        digUi.SetActive(false);
     }
 
     public void SelectDig()
     {
-        m_createFacilityState = CreateFacilityState.Dig;
+        SelectFacilityType = FacilityType.Digging;
         m_construction.SetActive(false);
+        m_createFacilityState = CreateFacilityState.Create;
+
     }
+
+
+
+
 
     void Start ()
     {
@@ -93,7 +113,12 @@ public class FacilityManager : MonoBehaviour
         }
         CreateMap();
         I = this;
-	}
+
+
+        GameObject digOb = GameObject.Find("DigContentsSystem");
+        digOb.GetComponent<DigContentsSystem>().Initialize(MapSize);
+
+    }
 
     void CreateMap()
     {
@@ -115,6 +140,11 @@ public class FacilityManager : MonoBehaviour
             }
         }
     }
-	
+
+
+    public void MoneyUpPush()
+    {
+        SelectFacility.GetComponent<Facility>().MoneyPush();
+    }
 
 }

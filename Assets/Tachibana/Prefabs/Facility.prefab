@@ -62,6 +62,8 @@ MonoBehaviour:
     y: 0
   rectTransform: {fileID: 0}
   facilityType: 0
+  setMoney: 0
+  setUnag: 0
 --- !u!114 &114633780473566562
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -152,6 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a3eabd3952b244db633ebc8729f935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canDig: 0
 --- !u!222 &222437329136779376
 CanvasRenderer:
   m_ObjectHideFlags: 1
