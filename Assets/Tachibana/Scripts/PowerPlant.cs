@@ -21,6 +21,10 @@ public class PowerPlant : FacilityBase
 
     public void ChageUnagi(int value)
     {
-        m_ChageUnagi += value;
+        if (GameParame.I.Unagi >= value)
+        {
+            m_ChageUnagi += value;
+            GameParame.I.Unagi -= value;
+        }
     }
 }

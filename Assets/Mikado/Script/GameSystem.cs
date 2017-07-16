@@ -25,6 +25,7 @@ public class GameSystem : MonoBehaviour
         get { return nowTime / practiceTime; }
     }
 
+    public UnityEngine.Events.UnityAction practiceCallback;
     GameState nowState;
     public GameState NowState
     {
@@ -157,6 +158,7 @@ public class GameSystem : MonoBehaviour
         else if(nowState==GameState.Practice)
         {
             MessageSystem.I.SetMessage("さあ、今日の仕事を始めようぞ");
+            if(practiceCallback!=null)practiceCallback.Invoke();
         }
     }
 
