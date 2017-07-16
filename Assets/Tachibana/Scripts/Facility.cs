@@ -101,7 +101,7 @@ public class Facility : MonoBehaviour
         //todo 施設開拓中
         if (GameSystem.I.NowState == GameSystem.GameState.Installation)
         {
-            if (FacilityManager.I.m_createFacilityState == CreateFacilityState.Create) return;
+            if (FacilityManager.I.m_createFacilityState != CreateFacilityState.Create) return;
             //すでに施設がある
             if (facilityType != FacilityType.None)
             {
@@ -146,7 +146,7 @@ public class Facility : MonoBehaviour
             for (int j = -1; j < 2; j++)
             {
                 
-                IntVector2 index = new IntVector2(i + (int)Index.x, j + (int)Index.y);
+                IntVector2 index = new IntVector2(i + Index.x, j + Index.y);
                
                 //範囲外なら戻る
                 if(index.x<0|| index.x>=FacilityManager.I.m_facility.Length
@@ -155,9 +155,9 @@ public class Facility : MonoBehaviour
                     continue;
                 }
 
-                if (FacilityManager.I.m_facility[(int)index.x][(int)index.y].facilityType == FacilityType.PowerPlant)
+                if (FacilityManager.I.m_facility[index.x][index.y].facilityType == FacilityType.PowerPlant)
                 {
-                    powerPlant = (PowerPlant)FacilityManager.I.m_facility[(int)index.x][(int)index.y].facilitybase;
+                    powerPlant = (PowerPlant)FacilityManager.I.m_facility[index.x][index.y].facilitybase;
                     Debug.Log("CreateBath");
                     isok = true;
                     break;
@@ -200,5 +200,4 @@ public class Facility : MonoBehaviour
         power.m_facility = slider;
         power.Start();
     }
-
 }
