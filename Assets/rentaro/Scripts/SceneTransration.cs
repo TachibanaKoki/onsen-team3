@@ -9,7 +9,7 @@ public class SceneTransration : MonoBehaviour {
     {
         Debug.Log("Push Button");
         // mainシーンがビルドセッティングされたらコメントを削除
-        //SceneManager.LoadScene("main");
+        SceneManager.LoadSceneAsync("main");
     }
 
 }

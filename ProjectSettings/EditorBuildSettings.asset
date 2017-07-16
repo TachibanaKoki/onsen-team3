@@ -8,3 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/rentaro/Scenes/Title.unity
     guid: 1a08e58d12c5c134ca63d78ef4f2495a
+  - enabled: 0
+    path: Assets/Tachibana/Tachibana.unity
+    guid: a376b4e58c5a8a9498cca86a108d7d49
+  - enabled: 1
+    path: Assets/main.unity
+    guid: 1b22bb0fa6ef6e640ba104331e507d3f
