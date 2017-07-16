@@ -94,8 +94,7 @@ public class Facility : MonoBehaviour
         {
             //if(facilityType==FacilityType.PowerPlant)
             //{
-            //    facilityAction.Update();
-               
+            //    facilityAction.Update();            
             //}
         }
     }
