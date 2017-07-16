@@ -6,13 +6,31 @@ using UnityEngine;
 public class DigContents : MonoBehaviour
 {
 
-    public const int MaxDig = 30;
-    private int nowDig = 0;//今どのぐらい掘っているか
+    public const int c_maxDig = 10;
+    public const int c_costMoney = 100;//適当、１００円ごと増えていく
+    public const int c_costUnagi = 10;
 
-   
+
+    public bool canDig = false;
+
+    bool old = false;
+
+     int nowDig = 0;//今どのぐらい掘っているか
+    public int NowDig
+    {
+        get { return nowDig+1; }
+    }
+
+
+    int digNumber = 0;
+
     GameObject systemGameObject;
 
     GameObject facilityObjectParent;
+
+    ////うなぎとお金投資金
+    //public int investmentMoney = 0;
+    //public int investmentUnagi = 0;
 
 
 
@@ -25,22 +43,14 @@ public class DigContents : MonoBehaviour
     }
 
 
-    DigItem[] digItemList = new DigItem[MaxDig];
+    DigItem[] digItemList = new DigItem[c_maxDig];
 
     //Use this for initialization
 
     void Start()
     {
-        systemGameObject=GameObject.Find("GameSystem");
+        systemGameObject = GameObject.Find("GameSystem");
         facilityObjectParent = this.transform.parent.gameObject;
-
-        //いったん女神なしのランダム格納します。
-        for (int i = 0; i < digItemList.Length; i++)
-        {
-            digItemList[i] = (DigItem)Random.Range(0, 3);
-        }
-
-
     }
 
     // Update is called once per frame
@@ -52,41 +62,47 @@ public class DigContents : MonoBehaviour
         {
             case GameSystem.GameState.Installation:
             case GameSystem.GameState.Practice:
-                if (facilityObjectParent.GetComponent<Facility>().facilityType != FacilityType.None)
+                if (facilityObjectParent.GetComponent<Facility>().facilityType != FacilityType.None && facilityObjectParent.GetComponent<Facility>().facilityType != FacilityType.Digging)
                     Destroy(this);
+                old = true;
                 break;
 
 
             case GameSystem.GameState.dig:
-
-
+                if (old == true)//掘って獲得
+                {
+                    Dig();
+                    old = false;
+                }
                 break;
-
         }
 
 
     }
 
-    public void Dig(int number)//指定した数字分掘ります
+
+
+
+    private void Dig()
     {
-
-        int initialDig = nowDig;
-        for (int i = initialDig; i < initialDig + number; i++)
-        {
-            if (nowDig >= 100)
-                break;
-
-            nowDig++;
+        nowDig++;
             switch ((DigItem)digItemList[nowDig])
             {
                 case DigItem.None:
                     break;
 
                 case DigItem.Unagi:
+                    GameParame.I.Unagi += Random.Range(20, 100);
                     break;
+
+
                 case DigItem.Money:
+                    GameParame.I.Money += Random.Range(20, 100);//適当
                     break;
-                case DigItem.Megami:
+
+
+                case DigItem.Megami://後でつけよう。。
+                    break;
 
                 default:
                     Debug.Log("掘るアイテムで例外");
@@ -95,15 +111,19 @@ public class DigContents : MonoBehaviour
 
             }
 
-        }
+        
 
     }
 
     public void SetDigState(DigItem digItem)
     {
+        int count = 0;
         while (true)
         {
-            int random = Random.Range(0, MaxDig);
+            count++;
+            if (count > 5)
+                break;
+            int random = Random.Range(0, c_maxDig);
             if (digItemList[random] == DigItem.None)
             {
                 digItemList[random] = digItem;

@@ -60,6 +60,9 @@ public class GameSystem : MonoBehaviour
         get { return canPush; }
     }
 
+
+
+
     void Awake()
     {
         if(I!=null)
