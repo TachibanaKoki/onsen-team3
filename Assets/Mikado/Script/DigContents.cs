@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //何もないところの地下の中身
-public class  DigContents: MonoBehaviour {
+public class DigContents : MonoBehaviour
+{
 
-    //private const int MaxDig = 100;
-    //private int nowDig = 0;//今どのぐらい掘っているか
+    public const int MaxDig = 30;
+    private int nowDig = 0;//今どのぐらい掘っているか
 
-    //[SerializeField]
-    //GameObject systemGameObject;
+   
+    GameObject systemGameObject;
 
-    //[SerializeField]
-    //GameObject facilityObject;
-
+    GameObject facilityObjectParent;
 
 
-    enum DigItem
+
+    public enum DigItem
     {
         None,
         Money,
@@ -25,39 +25,44 @@ public class  DigContents: MonoBehaviour {
     }
 
 
-  //  int[] digItemList = new int[MaxDig];
+    DigItem[] digItemList = new DigItem[MaxDig];
 
-    // Use this for initialization
-    void Start () {
+    //Use this for initialization
 
-        ////いったん女神なしのランダムい格納します。
-        //for(int i=0;i<digItemList.Length;i++)
-        //{
-        //    digItemList[i] = Random.Range(0,3);
-        //}
+    void Start()
+    {
+        systemGameObject=GameObject.Find("GameSystem");
+        facilityObjectParent = this.transform.parent.gameObject;
+
+        //いったん女神なしのランダム格納します。
+        for (int i = 0; i < digItemList.Length; i++)
+        {
+            digItemList[i] = (DigItem)Random.Range(0, 3);
+        }
 
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
 
 
-        //switch (systemGameObject.GetComponent<GameSystem>().NowState)
-        //{
-        //    case GameSystem.GameState.Installation:
-        //    case GameSystem.GameState.Practice:
-        //        if (facilityObject.GetComponent<Facility>().facilityType != FacilityType.None)
-        //            Destroy(this);
-        //        break;
+        switch (systemGameObject.GetComponent<GameSystem>().NowState)
+        {
+            case GameSystem.GameState.Installation:
+            case GameSystem.GameState.Practice:
+                if (facilityObjectParent.GetComponent<Facility>().facilityType != FacilityType.None)
+                    Destroy(this);
+                break;
 
 
-        //    case GameSystem.GameState.dig:
+            case GameSystem.GameState.dig:
 
 
-        //        break;
+                break;
 
-        //}
+        }
 
 
     }
@@ -65,35 +70,48 @@ public class  DigContents: MonoBehaviour {
     public void Dig(int number)//指定した数字分掘ります
     {
 
-        //int initialDig = nowDig;
-        //for (int i= initialDig; i<initialDig+number;i++)
-        //{
-        //    if (nowDig >=100)
-        //        break;
+        int initialDig = nowDig;
+        for (int i = initialDig; i < initialDig + number; i++)
+        {
+            if (nowDig >= 100)
+                break;
 
-        //    nowDig++;
-        //   switch((DigItem)digItemList[nowDig])
-        //    {
-        //        case DigItem.None:
-        //            break;
+            nowDig++;
+            switch ((DigItem)digItemList[nowDig])
+            {
+                case DigItem.None:
+                    break;
 
-        //        case DigItem.Unagi:
-        //            break;
-        //        case DigItem.Money:
-        //            break;
-        //        case DigItem.Megami:
+                case DigItem.Unagi:
+                    break;
+                case DigItem.Money:
+                    break;
+                case DigItem.Megami:
 
-        //        default:
-        //            Debug.Log("掘るアイテムで例外");
+                default:
+                    Debug.Log("掘るアイテムで例外");
 
-        //            break;
+                    break;
 
-        //    }
+            }
 
-        //}
+        }
 
     }
 
+    public void SetDigState(DigItem digItem)
+    {
+        while (true)
+        {
+            int random = Random.Range(0, MaxDig);
+            if (digItemList[random] == DigItem.None)
+            {
+                digItemList[random] = digItem;
+                break;
+            }
+        }
+
+    }
 
 
 
