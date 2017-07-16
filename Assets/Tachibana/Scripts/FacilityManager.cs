@@ -45,6 +45,26 @@ public class FacilityManager : MonoBehaviour
         m_messageBox.text = text;
     }
 
+    public Sprite GetFacilityImage(FacilityType state)
+    {
+        if (state == FacilityType.PublicBath)
+        {
+           return FacilityManager.I.m_PublicBath;
+        }
+        else if (state == FacilityType.PowerPlant)
+        {
+            return FacilityManager.I.m_PowerPlant;
+        }
+        else if (state == FacilityType.Aquaculture)
+        {
+            return FacilityManager.I.m_Aquaculture;
+        }
+        else
+        {
+
+        }
+        return null;
+    }
     
     
     public void SetPublicBath()

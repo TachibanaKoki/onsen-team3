@@ -27,6 +27,7 @@ public struct IntVector2
 
 public class Facility : MonoBehaviour
 {
+    public int GreadLevel = 1;
     public IntVector2 Index;
     public RectTransform rectTransform;
     public FacilityType facilityType = FacilityType.None;
@@ -37,6 +38,8 @@ public class Facility : MonoBehaviour
     [SerializeField]
     Slider slider;
 
+
+    
 
     void Awake()
     {
@@ -49,6 +52,18 @@ public class Facility : MonoBehaviour
         {
             facilitybase.Update();
         }
+    }
+
+    public void Reset()
+    {
+        slider.gameObject.SetActive(false);
+        facilitybase = new FacilityBase();
+        SetFaciltyType(FacilityType.None);
+        GreadLevel = 1;
+    }
+    public void GreadUP()
+    {
+        GreadLevel++;
     }
 
 	// Use this for initialization
@@ -75,7 +90,7 @@ public class Facility : MonoBehaviour
         }
         else
         {
-            
+            m_Image.sprite = null;
         }
         facilityType = facType;
     }
@@ -84,11 +99,15 @@ public class Facility : MonoBehaviour
     {
 
         //todo 施設開拓中
-        if (GameSystem.I.NowState == GameSystem.GameState.Installation
-            &&FacilityManager.I.m_createFacilityState==CreateFacilityState.Create)
+        if (GameSystem.I.NowState == GameSystem.GameState.Installation)
         {
+            if (FacilityManager.I.m_createFacilityState == CreateFacilityState.Create) return;
             //すでに施設がある
-            if (facilityType != FacilityType.None) return;
+            if (facilityType != FacilityType.None)
+            {
+                GrreadUpPanel.I.Open(this);
+                return;
+            }
 
             //施設設置
             if (FacilityManager.I.SelectFacilityType == FacilityType.PublicBath)
