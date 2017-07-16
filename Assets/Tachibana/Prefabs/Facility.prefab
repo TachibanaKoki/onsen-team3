@@ -57,6 +57,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db386080dc96b344b945fb3621935341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Index:
+    x: 0
+    y: 0
   rectTransform: {fileID: 0}
   facilityType: 0
 --- !u!114 &114633780473566562
@@ -149,8 +152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a3eabd3952b244db633ebc8729f935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  systemGameObject: {fileID: 0}
-  facilityObject: {fileID: 0}
 --- !u!222 &222437329136779376
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -174,7 +175,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -57, y: -207}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 170, y: 170}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224516120788528286
 RectTransform:

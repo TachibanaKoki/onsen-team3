@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum CreateFacilityState
 {
@@ -35,6 +36,16 @@ public class FacilityManager : MonoBehaviour
 
     [SerializeField]
     GameObject m_construction;
+
+    [SerializeField]
+    Text m_messageBox;
+
+    public void SetMessage(string text)
+    {
+        m_messageBox.text = text;
+    }
+
+    
     
     public void SetPublicBath()
     {
@@ -88,7 +99,7 @@ public class FacilityManager : MonoBehaviour
     {
         Vector2 vec = new Vector2(3,30);
         vec.Normalize();
-        float dis = 100;
+        float dis = 170;
 
         Vector2 offset = new Vector2(-100,-100);
 
