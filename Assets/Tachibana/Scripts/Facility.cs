@@ -11,14 +11,29 @@ public enum FacilityType
     PowerPlant
 }
 
+[System.Serializable]
+public struct IntVector2
+{
+    public IntVector2(int i,int j)
+    {
+        x = i;
+        y = j;
+    }
+
+
+    public int x;
+    public int y;
+}
+
 public class Facility : MonoBehaviour
 {
-
+    public IntVector2 Index;
     public RectTransform rectTransform;
     public FacilityType facilityType = FacilityType.None;
     FacilityTypeInterface facilityAction=null;
 
     Image m_Image;
+
 
     void Start()
     {
@@ -32,8 +47,9 @@ public class Facility : MonoBehaviour
     }
 
 	// Use this for initialization
-	public void GetRectTransform()
+	public void Initialize(int x,int y)
     {
+        Index = new IntVector2(x,y);
         rectTransform = GetComponent<RectTransform>();
 
     }
@@ -71,20 +87,15 @@ public class Facility : MonoBehaviour
             //施設設置
             if (FacilityManager.I.SelectFacilityType == FacilityType.PublicBath)
             {
-                if (GameParame.I.Money < GameParame.I.PublicBathCost) return;
-                GameParame.I.Money -= GameParame.I.PublicBathCost;
-                facilityAction = new PublicBath();
-
+                if (!CreatePublicBath()) return;
             }
             else if(FacilityManager.I.SelectFacilityType ==FacilityType.PowerPlant)
             {
-                if (GameParame.I.Money < GameParame.I.PowerPlantCost) return;
-                GameParame.I.Money -= GameParame.I.PowerPlantCost;
+                CreatePowerPlant();
             }
             else if(FacilityManager.I.SelectFacilityType ==FacilityType.Aquaculture)
             {
-                if (GameParame.I.Money < GameParame.I.AquacultureCost) return;
-                GameParame.I.Money -= GameParame.I.AquacultureCost;
+                CreateAquaculture();
             }
 
             SetFaciltyType(FacilityManager.I.SelectFacilityType);
@@ -97,6 +108,58 @@ public class Facility : MonoBehaviour
             //    facilityAction.Update();            
             //}
         }
+    }
+
+    bool CreatePublicBath()
+    {
+        if (GameParame.I.Money < GameParame.I.PublicBathCost) return false;
+
+        bool isok = false;
+        for (int i = -1; i < 2; i++)
+        {
+            for (int j = -1; j < 2; j++)
+            {
+                
+                IntVector2 index = new IntVector2(i + (int)Index.x, j + (int)Index.y);
+               
+                //範囲外なら戻る
+                if(index.x<0|| index.x>=FacilityManager.I.m_facility.Length
+                    ||index.y<0||index.y>=FacilityManager.I.m_facility.Length)
+                {
+                    continue;
+                }
+
+                if (FacilityManager.I.m_facility[(int)index.x][(int)index.y].facilityType == FacilityType.PowerPlant)
+                {
+                    Debug.Log("CreateBath");
+                    isok = true;
+                    break;
+                }
+            }
+        }
+
+        if (!isok)
+        {
+            return false;
+        }
+
+        GameParame.I.Money -= GameParame.I.PublicBathCost;
+        facilityAction = new PublicBath();
+        return true;
+
+    }
+
+    void CreateAquaculture()
+    {
+        if (GameParame.I.Money < GameParame.I.AquacultureCost) return;
+        GameParame.I.Money -= GameParame.I.AquacultureCost;
+    }
+
+    void CreatePowerPlant()
+    {
+        if (GameParame.I.Money < GameParame.I.PowerPlantCost) return;
+
+        GameParame.I.Money -= GameParame.I.PowerPlantCost;
     }
 
 }
