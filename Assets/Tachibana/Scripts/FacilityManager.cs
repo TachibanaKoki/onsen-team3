@@ -84,6 +84,11 @@ public class FacilityManager : MonoBehaviour
         m_construction.SetActive(false);
     }
 
+    void Awake()
+    {
+        I = this;
+    }
+
     void Start ()
     {
         m_facility = new Facility[MapSize][];
@@ -91,13 +96,14 @@ public class FacilityManager : MonoBehaviour
         {
             m_facility[i] = new Facility[MapSize];
         }
+
         CreateMap();
-        I = this;
+
 	}
 
     void CreateMap()
     {
-        Vector2 vec = new Vector2(3,30);
+        Vector2 vec = new Vector2(0,1);
         vec.Normalize();
         float dis = 170;
 
@@ -114,6 +120,10 @@ public class FacilityManager : MonoBehaviour
                 m_facility[i][j].rectTransform.anchoredPosition = offset+ v +new Vector2(vec.y,0- vec.x) * j*dis;
             }
         }
+
+        m_facility[1][1].CreatePowerPlant();
+        m_facility[1][2].CreatePublicBath();
+        m_facility[2][1].CreateAquaculture();
     }
 	
 

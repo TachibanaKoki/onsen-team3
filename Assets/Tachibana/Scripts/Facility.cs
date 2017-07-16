@@ -35,7 +35,7 @@ public class Facility : MonoBehaviour
     Image m_Image;
 
 
-    void Start()
+    void Awake()
     {
         m_Image = GetComponent<Image>();
     }
@@ -113,7 +113,7 @@ public class Facility : MonoBehaviour
         }
     }
 
-    bool CreatePublicBath()
+    public bool CreatePublicBath()
     {
         if (GameParame.I.Money < GameParame.I.PublicBathCost) return false;
 
@@ -147,27 +147,27 @@ public class Facility : MonoBehaviour
         }
 
         GameParame.I.Money -= GameParame.I.PublicBathCost;
-
-        SetFaciltyType(FacilityManager.I.SelectFacilityType);
+        facilitybase = new onsen();
+        facilitybase.Start();
+        SetFaciltyType(FacilityType.PublicBath);
         return true;
 
     }
 
-    void CreateAquaculture()
+    public void CreateAquaculture()
     {
         if (GameParame.I.Money < GameParame.I.AquacultureCost) return;
         GameParame.I.Money -= GameParame.I.AquacultureCost;
-        SetFaciltyType(FacilityManager.I.SelectFacilityType);
+        SetFaciltyType(FacilityType.Aquaculture);
         facilitybase = new Farms();
         facilitybase.Start();
     }
 
-    void CreatePowerPlant()
+   public void CreatePowerPlant()
     {
         if (GameParame.I.Money < GameParame.I.PowerPlantCost) return;
-
         GameParame.I.Money -= GameParame.I.PowerPlantCost;
-        SetFaciltyType(FacilityManager.I.SelectFacilityType);
+        SetFaciltyType(FacilityType.PowerPlant);
     }
 
 }

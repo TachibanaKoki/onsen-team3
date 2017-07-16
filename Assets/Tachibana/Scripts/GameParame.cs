@@ -34,27 +34,26 @@ public class GameParame : MonoBehaviour
     [SerializeField]
     Text UnagiInHand;
 
-
-    void Start ()
+    void Awake()
     {
-		if(I!=null )
+        if (I != null)
         {
             Destroy(I);
             I = null;
         }
         I = this;
 
-        if(PlayerPrefs.HasKey("Money"))
+        if (PlayerPrefs.HasKey("Money"))
         {
             Money = PlayerPrefs.GetInt("Money");
             Unagi = PlayerPrefs.GetInt("Unagi");
         }
         else
         {
-            Money = 1000;
+            Money = 1000+AquacultureCost+PowerPlantCost+PublicBathCost;
             Unagi = 100;
         }
-	}
+    }
 
     void Update()
     {
