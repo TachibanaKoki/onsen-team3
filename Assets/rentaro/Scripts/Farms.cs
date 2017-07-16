@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Farms : MonoBehaviour
+public class Farms : FacilityBase
 {
 
     // Use this for initialization
-    void Start()
+    public override void Start()
     {
         m_addUnagiCount = 0;
         m_currntUnagiNum = 0;
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
         m_addUnagiCount += Time.deltaTime;
         if (m_addUnagiCount > m_addUnagiTime)

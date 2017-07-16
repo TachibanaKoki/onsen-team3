@@ -30,7 +30,7 @@ public class Facility : MonoBehaviour
     public IntVector2 Index;
     public RectTransform rectTransform;
     public FacilityType facilityType = FacilityType.None;
-    FacilityTypeInterface facilityAction=null;
+    FacilityBase facilitybase = new FacilityBase();
 
     Image m_Image;
 
@@ -42,8 +42,10 @@ public class Facility : MonoBehaviour
 
     void Update()
     {
-        if (facilityAction == null) return;
-        facilityAction.Update();
+        if(GameSystem.I.NowState == GameSystem.GameState.Practice)
+        {
+            facilitybase.Update();
+        }
     }
 
 	// Use this for initialization
@@ -145,7 +147,7 @@ public class Facility : MonoBehaviour
         }
 
         GameParame.I.Money -= GameParame.I.PublicBathCost;
-        facilityAction = new PublicBath();
+
         SetFaciltyType(FacilityManager.I.SelectFacilityType);
         return true;
 
@@ -156,6 +158,8 @@ public class Facility : MonoBehaviour
         if (GameParame.I.Money < GameParame.I.AquacultureCost) return;
         GameParame.I.Money -= GameParame.I.AquacultureCost;
         SetFaciltyType(FacilityManager.I.SelectFacilityType);
+        facilitybase = new Farms();
+        facilitybase.Start();
     }
 
     void CreatePowerPlant()
