@@ -18,7 +18,10 @@ public class FacilityManager : MonoBehaviour
     public CreateFacilityState m_createFacilityState = CreateFacilityState.None;
 
     [SerializeField]
-    int MapSize = 5;
+    int MapSizeY = 5;
+
+    [SerializeField]
+    int MapSizeX = 5;
 
     [SerializeField]
     GameObject m_facilityPrefab;
@@ -113,10 +116,10 @@ public class FacilityManager : MonoBehaviour
 
     void Start ()
     {
-        m_facility = new Facility[MapSize][];
+        m_facility = new Facility[MapSizeY][];
         for(int i=0;i<  m_facility.Length; i++)
         {
-            m_facility[i] = new Facility[MapSize];
+            m_facility[i] = new Facility[MapSizeX];
         }
 
         CreateMap();
