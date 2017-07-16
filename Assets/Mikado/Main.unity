@@ -226,6 +226,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 326933327}
+  - component: {fileID: 326933328}
   m_Layer: 0
   m_Name: DigContentsSystem
   m_TagString: Untagged
@@ -246,6 +247,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &326933328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 326933326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34ded8b561ed6d44fbef3735b5722b89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  facilityManager: {fileID: 422623077}
+  megamiPrefab: {fileID: 1827147856914036, guid: 1ca8e740d663f294db3420af770963ed,
+    type: 2}
 --- !u!1 &393959732
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,6 +399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fe791a8a553a0d4494548475356c267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_createFacilityState: 0
   MapSize: 10
   m_facilityPrefab: {fileID: 1572261318754268, guid: 7ab6a93684d8cba4db18846019ba7eca,
     type: 2}
@@ -391,6 +407,8 @@ MonoBehaviour:
   m_Aquaculture: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   m_PowerPlant: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   SelectFacilityType: 0
+  m_construction: {fileID: 110763627}
+  m_messageBox: {fileID: 0}
 --- !u!224 &422623079
 RectTransform:
   m_ObjectHideFlags: 0
