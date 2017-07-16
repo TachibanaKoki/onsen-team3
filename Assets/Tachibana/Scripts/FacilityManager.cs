@@ -2,9 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CreateFacilityState
+{
+    None,
+    Create,
+    GreadeUp,
+    Dig
+}
+
 public class FacilityManager : MonoBehaviour
 {
     public static FacilityManager I;
+
+    public CreateFacilityState m_createFacilityState = CreateFacilityState.None;
 
     [SerializeField]
     int MapSize = 5;
@@ -22,6 +32,9 @@ public class FacilityManager : MonoBehaviour
     public FacilityType SelectFacilityType;
 
     public Facility[][] m_facility;
+
+    [SerializeField]
+    GameObject m_construction;
     
     public void SetPublicBath()
     {
@@ -38,6 +51,27 @@ public class FacilityManager : MonoBehaviour
         SelectFacilityType = FacilityType.PowerPlant;
     }
 
+
+    public void SetCreateFacilityState(CreateFacilityState state)
+    {
+        m_createFacilityState = state;
+        if(state!=CreateFacilityState.Create)
+        {
+            m_construction.SetActive(false);
+        }
+    }
+
+    public void CreateFacility()
+    {
+        m_createFacilityState = CreateFacilityState.Create;
+        m_construction.SetActive(true);
+    }
+
+    public void SelectDig()
+    {
+        m_createFacilityState = CreateFacilityState.Dig;
+        m_construction.SetActive(false);
+    }
 
     void Start ()
     {

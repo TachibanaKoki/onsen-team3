@@ -70,7 +70,7 @@ public class Facility : MonoBehaviour
         }
         else
         {
-
+            
         }
         facilityType = facType;
     }
@@ -79,7 +79,8 @@ public class Facility : MonoBehaviour
     {
 
         //todo 施設開拓中
-        if (GameSystem.I.NowState == GameSystem.GameState.Installation)
+        if (GameSystem.I.NowState == GameSystem.GameState.Installation
+            &&FacilityManager.I.m_createFacilityState==CreateFacilityState.Create)
         {
             //すでに施設がある
             if (facilityType != FacilityType.None) return;
@@ -98,7 +99,7 @@ public class Facility : MonoBehaviour
                 CreateAquaculture();
             }
 
-            SetFaciltyType(FacilityManager.I.SelectFacilityType);
+
         }
         //todo 営業中
         else if(GameSystem.I.NowState == GameSystem.GameState.Practice)
@@ -145,6 +146,7 @@ public class Facility : MonoBehaviour
 
         GameParame.I.Money -= GameParame.I.PublicBathCost;
         facilityAction = new PublicBath();
+        SetFaciltyType(FacilityManager.I.SelectFacilityType);
         return true;
 
     }
@@ -153,6 +155,7 @@ public class Facility : MonoBehaviour
     {
         if (GameParame.I.Money < GameParame.I.AquacultureCost) return;
         GameParame.I.Money -= GameParame.I.AquacultureCost;
+        SetFaciltyType(FacilityManager.I.SelectFacilityType);
     }
 
     void CreatePowerPlant()
@@ -160,6 +163,7 @@ public class Facility : MonoBehaviour
         if (GameParame.I.Money < GameParame.I.PowerPlantCost) return;
 
         GameParame.I.Money -= GameParame.I.PowerPlantCost;
+        SetFaciltyType(FacilityManager.I.SelectFacilityType);
     }
 
 }
