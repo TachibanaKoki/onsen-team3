@@ -94,12 +94,14 @@ public class FacilityManager : MonoBehaviour
 
     public void CreateFacility()
     {
+        if (GameSystem.I.NowState != GameSystem.GameState.Installation) return;
         m_createFacilityState = CreateFacilityState.Create;
         m_construction.SetActive(true);
     }
 
     public void SelectDig()
     {
+        if (GameSystem.I.NowState != GameSystem.GameState.Installation) return;
         m_createFacilityState = CreateFacilityState.Dig;
         m_construction.SetActive(false);
     }

@@ -101,13 +101,14 @@ public class Facility : MonoBehaviour
         //todo 施設開拓中
         if (GameSystem.I.NowState == GameSystem.GameState.Installation)
         {
-            if (FacilityManager.I.m_createFacilityState != CreateFacilityState.Create) return;
             //すでに施設がある
             if (facilityType != FacilityType.None)
             {
                 GrreadUpPanel.I.Open(this);
                 return;
             }
+            if (FacilityManager.I.m_createFacilityState != CreateFacilityState.Create) return;
+
 
             //施設設置
             if (FacilityManager.I.SelectFacilityType == FacilityType.PublicBath)
