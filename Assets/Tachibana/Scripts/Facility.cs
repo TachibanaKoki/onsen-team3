@@ -27,6 +27,7 @@ public struct IntVector2
 
 public class Facility : MonoBehaviour
 {
+    public int GreadLevel = 1;
     public IntVector2 Index;
     public RectTransform rectTransform;
     public FacilityType facilityType = FacilityType.None;
@@ -37,6 +38,8 @@ public class Facility : MonoBehaviour
     [SerializeField]
     Slider slider;
 
+
+    
 
     void Awake()
     {
@@ -49,6 +52,18 @@ public class Facility : MonoBehaviour
         {
             facilitybase.Update();
         }
+    }
+
+    public void Reset()
+    {
+        slider.gameObject.SetActive(false);
+        facilitybase = new FacilityBase();
+        SetFaciltyType(FacilityType.None);
+        GreadLevel = 1;
+    }
+    public void GreadUP()
+    {
+        GreadLevel++;
     }
 
 	// Use this for initialization
@@ -75,7 +90,7 @@ public class Facility : MonoBehaviour
         }
         else
         {
-            
+            m_Image.sprite = null;
         }
         facilityType = facType;
     }
@@ -84,11 +99,16 @@ public class Facility : MonoBehaviour
     {
 
         //todo 施設開拓中
-        if (GameSystem.I.NowState == GameSystem.GameState.Installation
-            &&FacilityManager.I.m_createFacilityState==CreateFacilityState.Create)
+        if (GameSystem.I.NowState == GameSystem.GameState.Installation)
         {
             //すでに施設がある
-            if (facilityType != FacilityType.None) return;
+            if (facilityType != FacilityType.None)
+            {
+                GrreadUpPanel.I.Open(this);
+                return;
+            }
+            if (FacilityManager.I.m_createFacilityState != CreateFacilityState.Create) return;
+
 
             //施設設置
             if (FacilityManager.I.SelectFacilityType == FacilityType.PublicBath)
@@ -118,7 +138,11 @@ public class Facility : MonoBehaviour
 
     public bool CreatePublicBath()
     {
-        if (GameParame.I.Money < GameParame.I.PublicBathCost) return false;
+        if (GameParame.I.Money < GameParame.I.PublicBathCost)
+        {
+            MessageSystem.I.SetMessage("所持金が足りない");
+            return false;
+        }
 
         PowerPlant powerPlant=null;
         bool isok = false;
@@ -127,7 +151,7 @@ public class Facility : MonoBehaviour
             for (int j = -1; j < 2; j++)
             {
                 
-                IntVector2 index = new IntVector2(i + (int)Index.x, j + (int)Index.y);
+                IntVector2 index = new IntVector2(i + Index.x, j + Index.y);
                
                 //範囲外なら戻る
                 if(index.x<0|| index.x>=FacilityManager.I.m_facility.Length
@@ -136,9 +160,9 @@ public class Facility : MonoBehaviour
                     continue;
                 }
 
-                if (FacilityManager.I.m_facility[(int)index.x][(int)index.y].facilityType == FacilityType.PowerPlant)
+                if (FacilityManager.I.m_facility[index.x][index.y].facilityType == FacilityType.PowerPlant)
                 {
-                    powerPlant = (PowerPlant)FacilityManager.I.m_facility[(int)index.x][(int)index.y].facilitybase;
+                    powerPlant = (PowerPlant)FacilityManager.I.m_facility[index.x][index.y].facilitybase;
                     Debug.Log("CreateBath");
                     isok = true;
                     break;
@@ -148,6 +172,7 @@ public class Facility : MonoBehaviour
 
         if (!isok)
         {
+            MessageSystem.I.SetMessage("近くに発電所がないようだ");
             return false;
         }
 
@@ -163,7 +188,11 @@ public class Facility : MonoBehaviour
 
     public void CreateAquaculture()
     {
-        if (GameParame.I.Money < GameParame.I.AquacultureCost) return;
+        if (GameParame.I.Money < GameParame.I.AquacultureCost)
+        {
+            MessageSystem.I.SetMessage("所持金が足りない");
+            return;
+        }
         GameParame.I.Money -= GameParame.I.AquacultureCost;
         SetFaciltyType(FacilityType.Aquaculture);
         facilitybase = new Farms();
@@ -172,7 +201,11 @@ public class Facility : MonoBehaviour
 
    public void CreatePowerPlant()
     {
-        if (GameParame.I.Money < GameParame.I.PowerPlantCost) return;
+        if (GameParame.I.Money < GameParame.I.PowerPlantCost)
+        {
+            MessageSystem.I.SetMessage("所持金が足りない");
+            return;
+        }
         GameParame.I.Money -= GameParame.I.PowerPlantCost;
         SetFaciltyType(FacilityType.PowerPlant);
         slider.gameObject.SetActive(true);
@@ -181,5 +214,4 @@ public class Facility : MonoBehaviour
         power.m_facility = slider;
         power.Start();
     }
-
 }

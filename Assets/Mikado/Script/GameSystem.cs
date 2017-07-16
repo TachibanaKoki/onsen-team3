@@ -6,26 +6,51 @@ public class GameSystem : MonoBehaviour
 {
     public static GameSystem I;
 
-
+    //自動進行中
+    public bool isAuto = false;
     public enum GameState
     {
         Installation,//物を設置するターン
         Practice,//開業するターン
         dig,//掘るターン
+        Wait
+    }
+
+    public float m_DigProcessed
+    {
+        get { return nowTime / digTime; }
+    }
+    public float m_PracticeProcessed
+    {
+        get { return nowTime / practiceTime; }
     }
 
     GameState nowState;
     public GameState NowState
     {
-        get { return nowState; }
+        get {
+            if (isAuto)
+            {
+                return nowState;
+            }
+            else if(nowState==GameState.Installation)
+            {
+                return nowState;
+            }
+            else
+            {
+                return GameState.Wait;
+            }
+        }
     }
 
 
     GameState oldState = GameState.Installation;
 
+
     float nowTime;
     const float digTime = 5f;//5秒ごとに
-    const float practiceTime = 5f;
+    const float practiceTime = 30.0f;
 
     //時間がたったらボタンが押せます
     bool canPush;
@@ -64,7 +89,7 @@ public class GameSystem : MonoBehaviour
                 if (nowState != oldState)
                 {
                     canPush = true;
-
+                    isAuto = false;
                 }
 
                 break;
@@ -77,12 +102,14 @@ public class GameSystem : MonoBehaviour
                 if (nowState != oldState)
                 {
                     canPush = false;
+                    isAuto = true;
                 }
                 nowTime += Time.deltaTime;
-
+                
                 if (nowTime > practiceTime)
                 {
                     nowTime = 0;
+                    isAuto = false;
                     canPush = true;
                 }
 
@@ -95,6 +122,7 @@ public class GameSystem : MonoBehaviour
 
                 if (nowState != oldState)
                 {
+                    isAuto = true;
                     canPush = false;
                     nowTime = 0;
                 }
@@ -103,6 +131,7 @@ public class GameSystem : MonoBehaviour
                 nowTime += Time.deltaTime;
                 if (nowTime > digTime)
                 {
+                    isAuto = false;
                     nowTime = 0;
                     canPush = true;
                 }
@@ -115,10 +144,20 @@ public class GameSystem : MonoBehaviour
 
     public void NextButton()
     {
+
         if (nowState == GameState.dig)//最後の
             nowState = GameState.Installation;
         else
             nowState++;
+
+        if(nowState == GameState.dig)
+        {
+            MessageSystem.I.SetMessage("君を掘り当てる！");
+        }
+        else if(nowState==GameState.Practice)
+        {
+            MessageSystem.I.SetMessage("さあ、今日の仕事を始めようぞ");
+        }
     }
 
 

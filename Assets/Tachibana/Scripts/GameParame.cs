@@ -34,6 +34,10 @@ public class GameParame : MonoBehaviour
     [SerializeField]
     Text UnagiInHand;
 
+    public int GreadUpMoney=300;
+
+    public int GreadUpUnagi=50;
+
     void Awake()
     {
         if (I != null)

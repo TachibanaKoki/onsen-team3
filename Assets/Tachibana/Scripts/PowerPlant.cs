@@ -10,8 +10,8 @@ public class PowerPlant : FacilityBase
 	// Use this for initialization
 	public override void Start ()
     {
-		
-	}
+        m_facility.value = m_ChageUnagi;
+    }
 	
 	// Update is called once per frame
 	public override void Update ()
