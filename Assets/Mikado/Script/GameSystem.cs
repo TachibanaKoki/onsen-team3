@@ -144,10 +144,20 @@ public class GameSystem : MonoBehaviour
 
     public void NextButton()
     {
+
         if (nowState == GameState.dig)//最後の
             nowState = GameState.Installation;
         else
             nowState++;
+
+        if(nowState == GameState.dig)
+        {
+            MessageSystem.I.SetMessage("君を掘り当てる！");
+        }
+        else if(nowState==GameState.Practice)
+        {
+            MessageSystem.I.SetMessage("さあ、今日の仕事を始めようぞ");
+        }
     }
 
 

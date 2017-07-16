@@ -138,7 +138,11 @@ public class Facility : MonoBehaviour
 
     public bool CreatePublicBath()
     {
-        if (GameParame.I.Money < GameParame.I.PublicBathCost) return false;
+        if (GameParame.I.Money < GameParame.I.PublicBathCost)
+        {
+            MessageSystem.I.SetMessage("所持金が足りない");
+            return false;
+        }
 
         PowerPlant powerPlant=null;
         bool isok = false;
@@ -168,6 +172,7 @@ public class Facility : MonoBehaviour
 
         if (!isok)
         {
+            MessageSystem.I.SetMessage("近くに発電所がないようだ");
             return false;
         }
 
@@ -183,7 +188,11 @@ public class Facility : MonoBehaviour
 
     public void CreateAquaculture()
     {
-        if (GameParame.I.Money < GameParame.I.AquacultureCost) return;
+        if (GameParame.I.Money < GameParame.I.AquacultureCost)
+        {
+            MessageSystem.I.SetMessage("所持金が足りない");
+            return;
+        }
         GameParame.I.Money -= GameParame.I.AquacultureCost;
         SetFaciltyType(FacilityType.Aquaculture);
         facilitybase = new Farms();
@@ -192,7 +201,11 @@ public class Facility : MonoBehaviour
 
    public void CreatePowerPlant()
     {
-        if (GameParame.I.Money < GameParame.I.PowerPlantCost) return;
+        if (GameParame.I.Money < GameParame.I.PowerPlantCost)
+        {
+            MessageSystem.I.SetMessage("所持金が足りない");
+            return;
+        }
         GameParame.I.Money -= GameParame.I.PowerPlantCost;
         SetFaciltyType(FacilityType.PowerPlant);
         slider.gameObject.SetActive(true);
