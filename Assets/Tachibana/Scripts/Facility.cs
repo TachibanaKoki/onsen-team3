@@ -28,6 +28,7 @@ public struct IntVector2
 
 public class Facility : MonoBehaviour
 {
+    public int GreadLevel = 1;
     public IntVector2 Index;
     public RectTransform rectTransform;
     public FacilityType facilityType = FacilityType.None;
@@ -39,8 +40,13 @@ public class Facility : MonoBehaviour
 
     Image m_Image;
 
+    [SerializeField]
+    Slider slider;
 
-    void Start()
+
+    
+
+    void Awake()
     {
         m_Image = GetComponent<Image>();
     }
@@ -53,8 +59,20 @@ public class Facility : MonoBehaviour
         }
     }
 
-    // Use this for initialization
-    public void Initialize(int x, int y)
+    public void Reset()
+    {
+        slider.gameObject.SetActive(false);
+        facilitybase = new FacilityBase();
+        SetFaciltyType(FacilityType.None);
+        GreadLevel = 1;
+    }
+    public void GreadUP()
+    {
+        GreadLevel++;
+    }
+
+	// Use this for initialization
+ public void Initialize(int x,int y)
     {
         Index = new IntVector2(x, y);
         rectTransform = GetComponent<RectTransform>();
@@ -63,7 +81,8 @@ public class Facility : MonoBehaviour
 
     public void SetFaciltyType(FacilityType facType)
     {
-        if (facType == FacilityType.PublicBath)
+        m_Image.color = Color.white;
+        if(facType==FacilityType.PublicBath)
         {
             m_Image.sprite = FacilityManager.I.m_PublicBath;
         }
@@ -77,7 +96,8 @@ public class Facility : MonoBehaviour
         }
         else
         {
-
+            m_Image.color = new Color(1,1,1,0.5f);
+            m_Image.sprite = null;
         }
         facilityType = facType;
     }
@@ -87,11 +107,16 @@ public class Facility : MonoBehaviour
 
 
         //todo 施設開拓中
-        if (GameSystem.I.NowState == GameSystem.GameState.Installation
-            && FacilityManager.I.m_createFacilityState == CreateFacilityState.Create)
+        if (GameSystem.I.NowState == GameSystem.GameState.Installation)
         {
             //すでに施設がある
-            if (facilityType != FacilityType.None) return;
+            if (facilityType != FacilityType.None)
+            {
+                GrreadUpPanel.I.Open(this);
+                return;
+            }
+            if (FacilityManager.I.m_createFacilityState != CreateFacilityState.Create) return;
+
 
             //施設設置
             if (FacilityManager.I.SelectFacilityType == FacilityType.PublicBath)
@@ -141,6 +166,7 @@ public class Facility : MonoBehaviour
         }
         else
         {
+
             if (GameParame.I.Money - DigContents.c_costMoney * g.NowDig >= 0 && GameParame.I.Unagi - DigContents.c_costUnagi * g.NowDig >= 0)
             {
                 Debug.Log("remove money");
@@ -159,17 +185,21 @@ public class Facility : MonoBehaviour
         SetDigText();
     }
 
-    bool CreatePublicBath()
+    public bool CreatePublicBath()
     {
-        if (GameParame.I.Money < GameParame.I.PublicBathCost) return false;
+        if (GameParame.I.Money < GameParame.I.PublicBathCost)
+        {
+            MessageSystem.I.SetMessage("所持金が足りない");
+            return false;
+        }
 
+        PowerPlant powerPlant=null;
         bool isok = false;
         for (int i = -1; i < 2; i++)
         {
             for (int j = -1; j < 2; j++)
             {
-
-                IntVector2 index = new IntVector2(i + (int)Index.x, j + (int)Index.y);
+                IntVector2 index = new IntVector2(i + Index.x, j + Index.y);
 
                 //範囲外なら戻る
                 if (index.x < 0 || index.x >= FacilityManager.I.m_facility.Length
@@ -178,8 +208,9 @@ public class Facility : MonoBehaviour
                     continue;
                 }
 
-                if (FacilityManager.I.m_facility[(int)index.x][(int)index.y].facilityType == FacilityType.PowerPlant)
+                if (FacilityManager.I.m_facility[index.x][index.y].facilityType == FacilityType.PowerPlant)
                 {
+                    powerPlant = (PowerPlant)FacilityManager.I.m_facility[index.x][index.y].facilitybase;
                     Debug.Log("CreateBath");
                     isok = true;
                     break;
@@ -189,16 +220,19 @@ public class Facility : MonoBehaviour
 
         if (!isok)
         {
+            MessageSystem.I.SetMessage("近くに発電所がないようだ");
             return false;
         }
 
         GameParame.I.Money -= GameParame.I.PublicBathCost;
-
-        SetFaciltyType(FacilityManager.I.SelectFacilityType);
+        facilitybase = new onsen();
+        onsen onsen = (onsen)facilitybase;
+        onsen.powerPlant = powerPlant;
+        onsen.Start();
+        SetFaciltyType(FacilityType.PublicBath);
         return true;
 
     }
-
     //うなぎ、金セットできるように、完了も表示
     void CreateDigging()
     {
@@ -218,23 +252,32 @@ public class Facility : MonoBehaviour
 
 
     }
-
-
-    void CreateAquaculture()
+    public void CreateAquaculture()
     {
-        if (GameParame.I.Money < GameParame.I.AquacultureCost) return;
+        if (GameParame.I.Money < GameParame.I.AquacultureCost)
+        {
+            MessageSystem.I.SetMessage("所持金が足りない");
+            return;
+        }
         GameParame.I.Money -= GameParame.I.AquacultureCost;
-        SetFaciltyType(FacilityManager.I.SelectFacilityType);
+        SetFaciltyType(FacilityType.Aquaculture);
         facilitybase = new Farms();
         facilitybase.Start();
     }
 
-    void CreatePowerPlant()
+   public void CreatePowerPlant()
     {
-        if (GameParame.I.Money < GameParame.I.PowerPlantCost) return;
-
+        if (GameParame.I.Money < GameParame.I.PowerPlantCost)
+        {
+            MessageSystem.I.SetMessage("所持金が足りない");
+            return;
+        }
         GameParame.I.Money -= GameParame.I.PowerPlantCost;
-        SetFaciltyType(FacilityManager.I.SelectFacilityType);
+        SetFaciltyType(FacilityType.PowerPlant);
+        slider.gameObject.SetActive(true);
+        facilitybase = new PowerPlant();
+        PowerPlant power = (PowerPlant)facilitybase;
+        power.m_facility = slider;
+        power.Start();
     }
-
 }

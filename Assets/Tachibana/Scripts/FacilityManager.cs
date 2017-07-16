@@ -18,7 +18,10 @@ public class FacilityManager : MonoBehaviour
     public CreateFacilityState m_createFacilityState = CreateFacilityState.None;
 
     [SerializeField]
-    int MapSize = 5;
+    int MapSizeY = 5;
+
+    [SerializeField]
+    int MapSizeX = 5;
 
     [SerializeField]
     GameObject m_facilityPrefab;
@@ -58,6 +61,26 @@ public class FacilityManager : MonoBehaviour
         m_messageBox.text = text;
     }
 
+    public Sprite GetFacilityImage(FacilityType state)
+    {
+        if (state == FacilityType.PublicBath)
+        {
+           return FacilityManager.I.m_PublicBath;
+        }
+        else if (state == FacilityType.PowerPlant)
+        {
+            return FacilityManager.I.m_PowerPlant;
+        }
+        else if (state == FacilityType.Aquaculture)
+        {
+            return FacilityManager.I.m_Aquaculture;
+        }
+        else
+        {
+
+        }
+        return null;
+    }
     
     
     public void SetPublicBath()
@@ -86,6 +109,7 @@ public class FacilityManager : MonoBehaviour
 
     public void CreateFacility()
     {
+        if (GameSystem.I.NowState != GameSystem.GameState.Installation) return;
 
         m_createFacilityState = CreateFacilityState.Create;
         m_construction.SetActive(true);
@@ -95,26 +119,27 @@ public class FacilityManager : MonoBehaviour
     public void SelectDig()
     {
         SelectFacilityType = FacilityType.Digging;
+        if (GameSystem.I.NowState != GameSystem.GameState.Installation) return;
+        m_createFacilityState = CreateFacilityState.Dig;
+
         m_construction.SetActive(false);
-        m_createFacilityState = CreateFacilityState.Create;
 
     }
 
-
-
-
+    void Awake()
+    {
+        I = this;
+    }
 
     void Start ()
     {
-        m_facility = new Facility[MapSize][];
+        m_facility = new Facility[MapSizeY][];
         for(int i=0;i<  m_facility.Length; i++)
         {
-            m_facility[i] = new Facility[MapSize];
+            m_facility[i] = new Facility[MapSizeX];
         }
+
         CreateMap();
-        I = this;
-
-
         GameObject digOb = GameObject.Find("DigContentsSystem");
         digOb.GetComponent<DigContentsSystem>().Initialize(MapSize);
 
@@ -122,7 +147,7 @@ public class FacilityManager : MonoBehaviour
 
     void CreateMap()
     {
-        Vector2 vec = new Vector2(3,30);
+        Vector2 vec = new Vector2(0,1);
         vec.Normalize();
         float dis = 170;
 
@@ -134,11 +159,16 @@ public class FacilityManager : MonoBehaviour
             {
                 m_facility[i][j] = GameObject.Instantiate(m_facilityPrefab).GetComponent<Facility>();
                 m_facility[i][j].transform.SetParent(transform);
+                m_facility[i][j].transform.localScale = Vector3.one;
                 m_facility[i][j].Initialize(i,j);
                 Vector2 v = vec*i*dis;
                 m_facility[i][j].rectTransform.anchoredPosition = offset+ v +new Vector2(vec.y,0- vec.x) * j*dis;
             }
         }
+
+        m_facility[1][1].CreatePowerPlant();
+        m_facility[1][2].CreatePublicBath();
+        m_facility[2][1].CreateAquaculture();
     }
 
 
