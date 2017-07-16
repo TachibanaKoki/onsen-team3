@@ -7,7 +7,7 @@ public class SceneTransration : MonoBehaviour {
 
     public void SceneLoad()
     {
-        Debug.Log("Push Button");
+        SoundManager.m_instance.PlaySE("SE_startbutton", 1.0f);
         SceneManager.LoadSceneAsync("main");
     }
 
