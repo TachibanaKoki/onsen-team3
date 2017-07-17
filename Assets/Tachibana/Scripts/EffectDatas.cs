@@ -8,11 +8,14 @@ public class EffectDatas : MonoBehaviour
     public GameObject ChargeEffect;
     public GameObject elect;
     public GameObject onsenSmoke;
+    public GameObject TextEffecrt;
+    public GameObject BreakeEffect;
 
 	// Use this for initialization
 	void Start ()
     {
         I = this;
 	}
+
 
 }

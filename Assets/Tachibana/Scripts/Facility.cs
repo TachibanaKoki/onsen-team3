@@ -70,6 +70,7 @@ public class Facility : MonoBehaviour
         facilitybase = new FacilityBase();
         SetFaciltyType(FacilityType.None);
         GreadLevel = 1;
+        GameObject.Instantiate(EffectDatas.I.BreakeEffect,transform);
         if(Effect!=null)
         {
             Destroy(Effect);
