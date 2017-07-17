@@ -2,53 +2,80 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+#if UNITY_ANDROID
 using UnityEngine.Advertisements;
+#endif
+
+[System.Serializable]
+public class GreadUpContent
+{
+    public Image m_facilityImage;
+
+    public Text m_GreadLevelText;
+
+    public Text moneyCost;
+
+    public Text unagiCost;
+}
+
 
 public class GrreadUpPanel : MonoBehaviour
 {
     public static GrreadUpPanel I;
 
     [SerializeField]
-    Image m_facilityImage;
+    GreadUpContent greadUpContent;
 
     [SerializeField]
-    Text m_GreadLevelText;
+    GreadUpContent androidGreadUpContent;
 
     [SerializeField]
-    Text moneyCost;
-
-    [SerializeField]
-    Text unagiCost;
+    GameObject m_androidContent;
 
     [SerializeField]
     GameObject m_Content;
 
-
+    [SerializeField]
+    Image Panel;
 
     Facility targetFacility;
 
     void Start()
     {
         I = this;
-        m_Content.SetActive(false);
+        ContentActive(false);
+    }
+
+    public void ContentActive(bool flag)
+    {
+#if UNITY_ANDROID 
+        m_androidContent.SetActive(flag);
+#else
+        m_Content.SetActive(flag);
+#endif
     }
 
     public void Open(Facility facility)
     {
         targetFacility = facility;
         Debug.Log("GradUpOpen");
-        m_Content.SetActive(true);
-        m_GreadLevelText.text = facility.GreadLevel.ToString();
-        moneyCost.text = GameParame.I.GreadUpMoney.ToString();
-        unagiCost.text = GameParame.I.GreadUpUnagi.ToString();
-        m_facilityImage.sprite = FacilityManager.I.GetFacilityImage(targetFacility.facilityType);
-
-
+        ContentActive(true);
+#if UNITY_ANDROID
+        androidGreadUpContent.m_GreadLevelText.text = facility.GreadLevel.ToString();
+        androidGreadUpContent.moneyCost.text = GameParame.I.GreadUpMoney.ToString();
+        androidGreadUpContent.unagiCost.text = GameParame.I.GreadUpUnagi.ToString();
+        androidGreadUpContent.m_facilityImage.sprite = FacilityManager.I.GetFacilityImage(targetFacility.facilityType);
+#else
+        greadUpContent.m_GreadLevelText.text = facility.GreadLevel.ToString();
+        greadUpContent.moneyCost.text = GameParame.I.GreadUpMoney.ToString();
+        greadUpContent.unagiCost.text = GameParame.I.GreadUpUnagi.ToString();
+        greadUpContent.m_facilityImage.sprite = FacilityManager.I.GetFacilityImage(targetFacility.facilityType);
+#endif
     }
 
-	public void Close()
+    public void Close()
     {
-        m_Content.SetActive(false);
+        ContentActive(false);
     }
 
     public void Break()
@@ -64,38 +91,47 @@ public class GrreadUpPanel : MonoBehaviour
             GameParame.I.Money -= GameParame.I.GreadUpMoney;
             GameParame.I.Unagi -= GameParame.I.GreadUpUnagi;
             targetFacility.GreadUP();
-            m_GreadLevelText.text = targetFacility.GreadLevel.ToString();
-            moneyCost.text = GameParame.I.GreadUpMoney.ToString();
-            unagiCost.text = GameParame.I.GreadUpUnagi.ToString();
-
-
+#if UNITY_ANDROID
+            androidGreadUpContent.m_GreadLevelText.text = targetFacility.GreadLevel.ToString();
+            androidGreadUpContent.moneyCost.text = GameParame.I.GreadUpMoney.ToString();
+            androidGreadUpContent.unagiCost.text = GameParame.I.GreadUpUnagi.ToString();
+#else
+            greadUpContent.m_GreadLevelText.text = targetFacility.GreadLevel.ToString();
+            greadUpContent.moneyCost.text = GameParame.I.GreadUpMoney.ToString();
+            greadUpContent.unagiCost.text = GameParame.I.GreadUpUnagi.ToString();
+#endif
         }
     }
 
     public void ShowVideo()
     {
-        if(Advertisement.IsReady("rewardedVideo"))
+#if UNITY_ANDROID
+        Panel.raycastTarget = true;
+        if (Advertisement.IsReady("rewardedVideo"))
         {
-            var option = new ShowOptions {resultCallback=  ShowResultAd};
+            var option = new ShowOptions { resultCallback = ShowResultAd };
         }
         Advertisement.Show();
+#endif
     }
-
+#if UNITY_ANDROID
     public void ShowResultAd(ShowResult result)
     {
         switch (result)
         {
             case ShowResult.Finished:
                 GreadUp();
+                Panel.raycastTarget = false;
                 break;
             case ShowResult.Skipped:
-               
+                Panel.raycastTarget = false;
                 break;
             case ShowResult.Failed:
+                Panel.raycastTarget = false;
                 GreadUp();
                 break;
-
         }
-        
+
     }
+#endif
 }
