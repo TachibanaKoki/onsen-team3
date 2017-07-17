@@ -103,20 +103,12 @@ public class Facility : MonoBehaviour
 
     }
 
-    public void SetFaciltyType(FacilityType facType)
+    public void SetFaciltyType(FacilityType facType,int level = 1)
     {
         m_Image.color = Color.white;
-        if (facType == FacilityType.PublicBath)
+        if (facType == FacilityType.PublicBath||facType==FacilityType.PowerPlant|| facType==FacilityType.Aquaculture)
         {
-            m_Image.sprite = FacilityManager.I.m_PublicBath;
-        }
-        else if (facType == FacilityType.PowerPlant)
-        {
-            m_Image.sprite = FacilityManager.I.m_PowerPlant;
-        }
-        else if (facType == FacilityType.Aquaculture)
-        {
-            m_Image.sprite = FacilityManager.I.m_Aquaculture;
+            m_Image.sprite = FacilityManager.I.GetFacilityImage(facType,level);
         }
         else if (facType == FacilityType.Dig)
         {

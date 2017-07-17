@@ -91,6 +91,7 @@ public class DigContents : MonoBehaviour
         switch ((DigItem)digItemList[nowDig])
         {
             case DigItem.None:
+                GetDigItem.I.Open("何も掘れなかった");
                 break;
 
             case DigItem.Unagi:

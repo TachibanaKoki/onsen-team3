@@ -584,9 +584,15 @@ MonoBehaviour:
   MapSizeX: 15
   m_facilityPrefab: {fileID: 1572261318754268, guid: 7ab6a93684d8cba4db18846019ba7eca,
     type: 2}
-  m_PublicBath: {fileID: 21300000, guid: 9db9de93bd7aa7647af1c09f5915c4be, type: 3}
-  m_Aquaculture: {fileID: 21300000, guid: 576edb5fa923c054bb27e0944656ceca, type: 3}
-  m_PowerPlant: {fileID: 21300000, guid: 91a9487d4a0776c49a69f097ff1ae710, type: 3}
+  m_PublicBath:
+  - {fileID: 21300000, guid: 9db9de93bd7aa7647af1c09f5915c4be, type: 3}
+  m_Aquaculture:
+  - {fileID: 21300000, guid: 15aec0736c8f49b4d99e6db8bb1d9820, type: 3}
+  - {fileID: 21300000, guid: 576edb5fa923c054bb27e0944656ceca, type: 3}
+  m_PowerPlant:
+  - {fileID: 21300000, guid: 91a9487d4a0776c49a69f097ff1ae710, type: 3}
+  - {fileID: 21300000, guid: 6b564fee72d04ae4c9a193c81bd2fc8a, type: 3}
+  - {fileID: 21300000, guid: 386a8fdff5f67fe4682ff830721c27d0, type: 3}
   m_SetDigging: {fileID: 0}
   m_Dig: {fileID: 0}
   SelectFacilityType: 0
