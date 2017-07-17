@@ -93,6 +93,7 @@ public class Facility : MonoBehaviour
     public void GreadUP()
     {
         GreadLevel++;
+        m_Image.sprite = FacilityManager.I.GetFacilityImage(facilityType,GreadLevel);
     }
 
     // Use this for initialization

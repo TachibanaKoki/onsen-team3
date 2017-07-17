@@ -64,12 +64,12 @@ public class GrreadUpPanel : MonoBehaviour
         androidGreadUpContent.m_GreadLevelText.text = facility.GreadLevel.ToString();
         androidGreadUpContent.moneyCost.text = GameParame.I.GreadUpMoney.ToString();
         androidGreadUpContent.unagiCost.text = GameParame.I.GreadUpUnagi.ToString();
-        androidGreadUpContent.m_facilityImage.sprite = FacilityManager.I.GetFacilityImage(targetFacility.facilityType);
+        androidGreadUpContent.m_facilityImage.sprite = FacilityManager.I.GetFacilityImage(targetFacility.facilityType, targetFacility.GreadLevel);
 #else
         greadUpContent.m_GreadLevelText.text = facility.GreadLevel.ToString();
         greadUpContent.moneyCost.text = GameParame.I.GreadUpMoney.ToString();
         greadUpContent.unagiCost.text = GameParame.I.GreadUpUnagi.ToString();
-        greadUpContent.m_facilityImage.sprite = FacilityManager.I.GetFacilityImage(targetFacility.facilityType);
+        greadUpContent.m_facilityImage.sprite = FacilityManager.I.GetFacilityImage(targetFacility.facilityType,targetFacility.GreadLevel);
 #endif
     }
 
@@ -95,10 +95,12 @@ public class GrreadUpPanel : MonoBehaviour
             androidGreadUpContent.m_GreadLevelText.text = targetFacility.GreadLevel.ToString();
             androidGreadUpContent.moneyCost.text = GameParame.I.GreadUpMoney.ToString();
             androidGreadUpContent.unagiCost.text = GameParame.I.GreadUpUnagi.ToString();
+            androidGreadUpContent.m_facilityImage.sprite = FacilityManager.I.GetFacilityImage(targetFacility.facilityType, targetFacility.GreadLevel);
 #else
             greadUpContent.m_GreadLevelText.text = targetFacility.GreadLevel.ToString();
             greadUpContent.moneyCost.text = GameParame.I.GreadUpMoney.ToString();
             greadUpContent.unagiCost.text = GameParame.I.GreadUpUnagi.ToString();
+            greadUpContent.m_facilityImage.sprite = FacilityManager.I.GetFacilityImage(targetFacility.facilityType,targetFacility.GreadLevel);
 #endif
         }
     }
