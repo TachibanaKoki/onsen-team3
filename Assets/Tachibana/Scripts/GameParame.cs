@@ -54,10 +54,9 @@ public class GameParame : MonoBehaviour
         }
         else
         {
-            //Money = 1000+AquacultureCost+PowerPlantCost+PublicBathCost;
-            //Unagi = 100;
-            Money = 2000000000;
-            Unagi = 1000000;
+            Money = 1000 + AquacultureCost + PowerPlantCost + PublicBathCost;
+            Unagi = 100;
+
         }
     }
 

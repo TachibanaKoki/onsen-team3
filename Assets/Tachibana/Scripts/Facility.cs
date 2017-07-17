@@ -310,6 +310,8 @@ public class Facility : MonoBehaviour
         {
 
             MessageSystem.I.SetMessage("ここはもう掘りました", 2f);
+            FacilityManager.I.digUi.SetActive(false);
+
             return;
         }
 
