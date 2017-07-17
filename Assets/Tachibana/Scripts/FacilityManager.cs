@@ -28,11 +28,11 @@ public class FacilityManager : MonoBehaviour
 
  
 
-    public Sprite m_PublicBath;
+    public Sprite[] m_PublicBath;
    
-    public Sprite m_Aquaculture;
+    public Sprite[] m_Aquaculture;
 
-    public Sprite m_PowerPlant;
+    public Sprite[] m_PowerPlant;
 
     public Sprite m_SetDigging;//セットし掘る方
 
@@ -63,19 +63,41 @@ public class FacilityManager : MonoBehaviour
         m_messageBox.text = text;
     }
 
-    public Sprite GetFacilityImage(FacilityType state)
+    public Sprite GetFacilityImage(FacilityType state,int Level=1)
     {
+
         if (state == FacilityType.PublicBath)
         {
-           return FacilityManager.I.m_PublicBath;
+            if (Level < FacilityManager.I.m_PublicBath.Length)
+            {
+                return FacilityManager.I.m_PublicBath[Level-1];
+            }
+            else
+            {
+                return FacilityManager.I.m_PublicBath[FacilityManager.I.m_PublicBath.Length-1];
+            }
         }
         else if (state == FacilityType.PowerPlant)
         {
-            return FacilityManager.I.m_PowerPlant;
+            if (Level < FacilityManager.I.m_PowerPlant.Length)
+            {
+                return FacilityManager.I.m_PowerPlant[Level-1];
+            }
+            else
+            {
+                return FacilityManager.I.m_PowerPlant[FacilityManager.I.m_PowerPlant.Length - 1];
+            }
         }
         else if (state == FacilityType.Aquaculture)
         {
-            return FacilityManager.I.m_Aquaculture;
+            if (Level < FacilityManager.I.m_Aquaculture.Length)
+            {
+                return FacilityManager.I.m_Aquaculture[Level-1];
+            }
+            else
+            {
+                return FacilityManager.I.m_Aquaculture[FacilityManager.I.m_Aquaculture.Length - 1];
+            }
         }
         else if(state==FacilityType.Dig)
         {

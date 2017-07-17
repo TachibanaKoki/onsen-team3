@@ -378,6 +378,7 @@ MonoBehaviour:
     type: 2}
   DigBreakeEffect: {fileID: 1964081349998992, guid: b0428fa8f2e78f84480e7ca36a12f037,
     type: 2}
+  Megami: {fileID: 0}
 --- !u!4 &158376746
 Transform:
   m_ObjectHideFlags: 0
@@ -586,9 +587,9 @@ MonoBehaviour:
   MapSizeX: 15
   m_facilityPrefab: {fileID: 1572261318754268, guid: 7ab6a93684d8cba4db18846019ba7eca,
     type: 2}
-  m_PublicBath: {fileID: 21300000, guid: 9db9de93bd7aa7647af1c09f5915c4be, type: 3}
-  m_Aquaculture: {fileID: 21300000, guid: 576edb5fa923c054bb27e0944656ceca, type: 3}
-  m_PowerPlant: {fileID: 21300000, guid: 91a9487d4a0776c49a69f097ff1ae710, type: 3}
+  m_PublicBath: []
+  m_Aquaculture: []
+  m_PowerPlant: []
   m_SetDigging: {fileID: 21300000, guid: 968f382deae1e1f44b9ec6ac0dcec143, type: 3}
   m_Dig: {fileID: 21300000, guid: b719db148eea58b44b922715d9d1e07a, type: 3}
   SelectFacilityType: 0
@@ -596,6 +597,7 @@ MonoBehaviour:
   m_construction: {fileID: 2012617895}
   digUi: {fileID: 1965389906}
   m_messageBox: {fileID: 0}
+  digTrun: {fileID: 944527132}
 --- !u!114 &499359742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1313,7 +1315,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &944527133
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1326,7 +1328,7 @@ RectTransform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 1489638553}
-  m_RootOrder: 10
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1340,7 +1342,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 944527132}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -1801,6 +1803,41 @@ Prefab:
         type: 2}
       propertyPath: m_LocalScale.z
       value: 0.7625855
+      objectReference: {fileID: 0}
+    - target: {fileID: 224946420379621086, guid: a23b1285c1c6b664b90d9cd54f6ccefc,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 224826186476398444, guid: a23b1285c1c6b664b90d9cd54f6ccefc,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 224665330555730288, guid: a23b1285c1c6b664b90d9cd54f6ccefc,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224761562716714222, guid: a23b1285c1c6b664b90d9cd54f6ccefc,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 224006728916147514, guid: a23b1285c1c6b664b90d9cd54f6ccefc,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 224790107251210108, guid: a23b1285c1c6b664b90d9cd54f6ccefc,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 224115719925767152, guid: a23b1285c1c6b664b90d9cd54f6ccefc,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a23b1285c1c6b664b90d9cd54f6ccefc, type: 2}

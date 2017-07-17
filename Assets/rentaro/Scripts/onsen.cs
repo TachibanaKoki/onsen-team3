@@ -2,14 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// 営業時間中に温泉がたっている間は所持金が増える
-// お湯の温度調節
-// 周りに発電所があれば建てられる
-// 発電所をタップ用関数を作成
-// 発電所以外はタップイベントはない
-// 一定時間ごとに所持金が入る。所持金は発電所のタップイベントの
-// 養殖所言って時間ごとにうなぎのパラメータが増えていく
-// うなぎが任意のタイミングで一気に手に入る関数を作成
 
 public class onsen : FacilityBase
 {
@@ -20,11 +12,18 @@ public class onsen : FacilityBase
     private float m_addMoneyCount;
     private int m_currntMoneyNum;
     private const float m_addMoneyTime = 0.5f;
+    GameObject effect;
+
+    public bool IsPractice
+    {
+        get { return powerPlant.m_ChageUnagi <= 0; }
+    }
     // Use this for initialization
-    public override void Start ()
+    public override void Start (Facility fac)
     {
         m_addMoneyCount = 0;
         m_currntMoneyNum = 0;
+        base.Start(fac);
             
 	}
 	
@@ -35,9 +34,10 @@ public class onsen : FacilityBase
         if (m_addMoneyCount > m_addMoneyTime)
         {
             if (powerPlant.m_ChageUnagi <= 0) return;
-            powerPlant.m_ChageUnagi -= 1;
-            m_currntMoneyNum += addvalue;
+            powerPlant.RemoveUnagi(3);
+            m_currntMoneyNum += addvalue*facility.GreadLevel;
             GameParame.I.Money += m_currntMoneyNum;
+            SoundManager.m_instance.CoinGetSound();
             m_addMoneyCount = 0;
         }
     }
