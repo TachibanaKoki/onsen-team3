@@ -10,4 +10,9 @@ public class SceneTransration : MonoBehaviour {
         SceneManager.LoadSceneAsync("main");
     }
 
+    public void LoadScene(string name)
+    {
+        Camera.main.GetComponent<SceenFade>().LoadSceenWithFade(name);
+    }
+
 }

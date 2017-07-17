@@ -16,7 +16,7 @@ public class Menu : MonoBehaviour
 
     public void TitleBack()
     {
-        SceneManager.LoadSceneAsync("Title");
+        Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Title");
     }
 
     public void Clese()
