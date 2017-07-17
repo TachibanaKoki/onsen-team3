@@ -1676,6 +1676,9 @@ MonoBehaviour:
   - name: SE
     acbFile: SE.acb
     awbFile: 
+  - name: BGM
+    acbFile: BGM.acb
+    awbFile: BGM.awb
   dspBusSetting: 
   dontDestroyOnLoad: 1
   dontRemoveExistsCueSheet: 0
