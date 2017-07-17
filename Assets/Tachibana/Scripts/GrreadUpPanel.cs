@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Advertisements;
 
 public class GrreadUpPanel : MonoBehaviour
 {
@@ -71,5 +72,30 @@ public class GrreadUpPanel : MonoBehaviour
         }
     }
 
+    public void ShowVideo()
+    {
+        if(Advertisement.IsReady("rewardedVideo"))
+        {
+            var option = new ShowOptions {resultCallback=  ShowResultAd};
+        }
+        Advertisement.Show();
+    }
 
+    public void ShowResultAd(ShowResult result)
+    {
+        switch (result)
+        {
+            case ShowResult.Finished:
+                GreadUp();
+                break;
+            case ShowResult.Skipped:
+               
+                break;
+            case ShowResult.Failed:
+                GreadUp();
+                break;
+
+        }
+        
+    }
 }

@@ -67,7 +67,7 @@ public class PinchinPinchOut : MonoBehaviour
     {
         argScale = Mathf.Max(0.3f, argScale);
         RectTransform rt = this.GetComponent(typeof(RectTransform)) as RectTransform;
-        rt.localScale = new Vector2(argScale, argScale);
+        rt.localScale = new Vector3(argScale, argScale,1);
     }
 
 }

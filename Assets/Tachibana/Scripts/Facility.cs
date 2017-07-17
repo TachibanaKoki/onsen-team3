@@ -46,7 +46,7 @@ public class Facility : MonoBehaviour
     Slider slider;
 
 
-
+    GameObject Effect;
 
     void Awake()
     {
@@ -71,6 +71,11 @@ public class Facility : MonoBehaviour
 
 
    
+
+        if(Effect!=null)
+        {
+            Effect.transform.localScale = FacilityManager.I.transform.localScale;
+        }
     }
 
     public void Reset()
@@ -79,6 +84,10 @@ public class Facility : MonoBehaviour
         facilitybase = new FacilityBase();
         SetFaciltyType(FacilityType.None);
         GreadLevel = 1;
+        if(Effect!=null)
+        {
+            Destroy(Effect);
+        }
     }
     public void GreadUP()
     {
@@ -126,8 +135,6 @@ public class Facility : MonoBehaviour
 
     public void TapArea()
     {
-
-
         //todo 施設開拓中
         if (GameSystem.I.NowState == GameSystem.GameState.Installation)
         {
@@ -170,14 +177,20 @@ public class Facility : MonoBehaviour
             {
                 FacilityManager.I.digUi.SetActive(false);
             }
-
-
         }
         //todo 営業中
         else if (GameSystem.I.NowState == GameSystem.GameState.Practice)
         {
-
-
+            if (facilityType == FacilityType.PowerPlant)
+            {
+                PowerPlant pp = (PowerPlant)facilitybase;
+                if (pp.m_ChageUnagi >= 100)
+                {
+                    MessageSystem.I.SetMessage("発電所にこれ以上ウナギは必要ないようだ……");
+                    return;
+                }
+                pp.ChageUnagi(10);
+            }
         }
     }
 
@@ -249,7 +262,7 @@ public class Facility : MonoBehaviour
             MessageSystem.I.SetMessage("近くに発電所がないようだ");
             return false;
         }
-
+        Effect = GameObject.Instantiate(EffectDatas.I.onsenSmoke,gameObject.transform);
         GameParame.I.Money -= GameParame.I.PublicBathCost;
         facilitybase = new onsen();
         onsen onsen = (onsen)facilitybase;
@@ -293,6 +306,7 @@ public class Facility : MonoBehaviour
             MessageSystem.I.SetMessage("所持金が足りない");
             return;
         }
+        Effect = GameObject.Instantiate(EffectDatas.I.elect, gameObject.transform);
         GameParame.I.Money -= GameParame.I.PowerPlantCost;
         SetFaciltyType(FacilityType.PowerPlant);
         slider.gameObject.SetActive(true);
