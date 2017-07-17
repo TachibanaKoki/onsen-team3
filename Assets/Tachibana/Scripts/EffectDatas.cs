@@ -10,9 +10,10 @@ public class EffectDatas : MonoBehaviour
     public GameObject onsenSmoke;
     public GameObject TextEffecrt;
     public GameObject BreakeEffect;
+    public GameObject DigBreakeEffect;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
         I = this;
 	}

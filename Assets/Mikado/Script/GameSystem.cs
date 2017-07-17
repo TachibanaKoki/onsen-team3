@@ -57,7 +57,11 @@ public class GameSystem : MonoBehaviour
     bool canPush;
     public bool CanPush
     {
-        get { return canPush; }
+        get {
+            //    return canPush;
+            return true;
+
+        }
     }
 
 
@@ -160,6 +164,7 @@ public class GameSystem : MonoBehaviour
         }
         else if(nowState==GameState.Practice)
         {
+            FacilityManager.I.SetDigImageNotActiv();
             FacilityManager.I.digUi.SetActive(false);
             MessageSystem.I.SetMessage("さあ、今日の仕事を始めようぞ");
             if(practiceCallback!=null)practiceCallback.Invoke();

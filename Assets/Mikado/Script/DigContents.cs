@@ -62,8 +62,7 @@ public class DigContents : MonoBehaviour
         {
             case GameSystem.GameState.Installation:
             case GameSystem.GameState.Practice:
-                if (facilityObjectParent.GetComponent<Facility>().facilityType != FacilityType.None && facilityObjectParent.GetComponent<Facility>().facilityType != FacilityType.Dig&& facilityObjectParent.GetComponent<Facility>().facilityType != FacilityType.DigSet)
-                    Destroy(this);
+          
                 old = true;
                 break;
 

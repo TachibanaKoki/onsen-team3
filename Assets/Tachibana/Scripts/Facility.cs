@@ -11,7 +11,7 @@ public enum FacilityType
     PowerPlant,
     Dig,//掘り途中状態
     DigSet,//掘るをセットされた状態
-    
+
 }
 
 [System.Serializable]
@@ -55,24 +55,42 @@ public class Facility : MonoBehaviour
 
     void Update()
     {
-        if (GameSystem.I.NowState == GameSystem.GameState.Practice)
+        if (GameSystem.I.NowState == GameSystem.GameState.Installation)
+        {
+           if (Effect != null&&facilityType==FacilityType.Dig)
+            {
+                Destroy(Effect);
+            }
+
+        }
+        else if (GameSystem.I.NowState == GameSystem.GameState.Practice)
         {
             facilitybase.Update();
         }
         else if (GameSystem.I.NowState == GameSystem.GameState.dig)
         {
+            //掘エフェクトつける
+            if (Effect == null && FacilityType.DigSet == facilityType)
+            {
+                Debug.Log(2);
+                Effect = GameObject.Instantiate(EffectDatas.I.DigBreakeEffect, gameObject.transform);
+            }
             //営業終わって掘るだったらdigに戻す
             if (FacilityType.DigSet == facilityType)
             {
+                Debug.Log(4);
                 facilityType = FacilityType.Dig;
                 SetFaciltyType(FacilityType.Dig);
+
+
             }
+
         }
 
 
-   
 
-        if(Effect!=null)
+
+        if (Effect != null)
         {
             Effect.transform.localScale = FacilityManager.I.transform.localScale;
         }
@@ -84,8 +102,8 @@ public class Facility : MonoBehaviour
         facilitybase = new FacilityBase();
         SetFaciltyType(FacilityType.None);
         GreadLevel = 1;
-        GameObject.Instantiate(EffectDatas.I.BreakeEffect,transform);
-        if(Effect!=null)
+        GameObject.Instantiate(EffectDatas.I.BreakeEffect, transform);
+        if (Effect != null)
         {
             Destroy(Effect);
         }
@@ -140,7 +158,7 @@ public class Facility : MonoBehaviour
         if (GameSystem.I.NowState == GameSystem.GameState.Installation)
         {
             //すでに施設がある
-            if (facilityType != FacilityType.None&& facilityType != FacilityType.Dig && facilityType != FacilityType.DigSet)
+            if (facilityType != FacilityType.None && facilityType != FacilityType.Dig && facilityType != FacilityType.DigSet)
             {
                 FacilityManager.I.digUi.SetActive(false);
                 GrreadUpPanel.I.Open(this);
@@ -162,9 +180,9 @@ public class Facility : MonoBehaviour
                     CreateAquaculture();
                 }
             }
-             if (FacilityManager.I.m_createFacilityState == CreateFacilityState.Dig)
+            if (FacilityManager.I.m_createFacilityState == CreateFacilityState.Dig)
             {
-                if (facilityType==FacilityType.None|| facilityType == FacilityType.Dig)
+                if (facilityType == FacilityType.None || facilityType == FacilityType.Dig)
                 {
                     CreateDigging();
                 }
@@ -172,7 +190,7 @@ public class Facility : MonoBehaviour
                 {
                     FacilityManager.I.digUi.SetActive(false);
                 }
-                
+
             }
             else
             {
@@ -206,6 +224,15 @@ public class Facility : MonoBehaviour
     {
 
         var g = this.GetComponentInChildren<DigContents>();
+
+
+        //連続で2回掘れない
+        if (g.NowDig >= DigContents.c_maxDig)
+        {
+            MessageSystem.I.SetMessage("1ターンに一回しか掘れないです", 2f);
+            return;
+        }
+
 
 
         if (GameParame.I.Money - DigContents.c_costMoney * g.NowDig >= 0 && GameParame.I.Unagi - DigContents.c_costUnagi * g.NowDig >= 0)
@@ -263,7 +290,7 @@ public class Facility : MonoBehaviour
             MessageSystem.I.SetMessage("近くに発電所がないようだ");
             return false;
         }
-        Effect = GameObject.Instantiate(EffectDatas.I.onsenSmoke,gameObject.transform);
+        Effect = GameObject.Instantiate(EffectDatas.I.onsenSmoke, gameObject.transform);
         GameParame.I.Money -= GameParame.I.PublicBathCost;
         facilitybase = new onsen();
         onsen onsen = (onsen)facilitybase;
@@ -278,7 +305,15 @@ public class Facility : MonoBehaviour
     {
         var g = this.GetComponentInChildren<DigContents>();
 
-        Debug.Log("DegCount"+g.NowDig);
+        //これ以上掘れない場合
+        if (g.NowDig >= DigContents.c_maxDig)
+        {
+
+            MessageSystem.I.SetMessage("ここはもう掘りました", 2f);
+            return;
+        }
+
+        Debug.Log("DegCount" + g.NowDig);
         setMoney = g.NowDig * DigContents.c_costMoney;
         setUnagi = g.NowDig * DigContents.c_costUnagi;
 

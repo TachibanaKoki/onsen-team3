@@ -54,6 +54,10 @@ public class FacilityManager : MonoBehaviour
     [SerializeField]
     Text m_messageBox;
 
+    [SerializeField]
+     GameObject digTrun;
+
+
     public void SetMessage(string text)
     {
         m_messageBox.text = text;
@@ -115,15 +119,22 @@ public class FacilityManager : MonoBehaviour
         m_createFacilityState = CreateFacilityState.Create;
         m_construction.SetActive(true);
         digUi.SetActive(false);
+        SetDigImageNotActiv();
     }
 
     public void SelectDig()
     {
+  
         if (GameSystem.I.NowState != GameSystem.GameState.Installation) return;
         m_createFacilityState = CreateFacilityState.Dig;
         m_construction.SetActive(false);
 
-        MessageSystem.I.SetMessage("掘りたい場所を選んでください",2f);
+
+        digTrun.SetActive(true);
+        MessageSystem.I.SetMessage("掘りたい場所を選んでください", 2f);
+
+
+
     }
 
     void Awake()
@@ -179,5 +190,10 @@ public class FacilityManager : MonoBehaviour
     public void PushDigNOButton()
     {
         digUi.SetActive(false);
+    }
+
+    public void SetDigImageNotActiv()
+    {
+        digTrun.SetActive(false);
     }
 }
