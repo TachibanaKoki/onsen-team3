@@ -73,6 +73,12 @@ public class SoundManager : MonoBehaviour {
         atomSourceSE.Play("SE_startbutton");
     }
 
+    public void CoinGetSound()
+    {
+        atomSourceSE.androidUseLowLatencyVoicePool = true;
+        atomSourceSE.Play("SE_coinget");
+    }
+
     public void PauseBGM()
     {
         atomSourceBGM.Pause(true);

@@ -30,6 +30,7 @@ public class onsen : FacilityBase
             powerPlant.m_ChageUnagi -= 1;
             m_currntMoneyNum += addvalue;
             GameParame.I.Money += m_currntMoneyNum;
+            SoundManager.m_instance.CoinGetSound();
             m_addMoneyCount = 0;
         }
     }
