@@ -93,14 +93,14 @@ public class DigContents : MonoBehaviour
                 break;
 
             case DigItem.Unagi:
-                int value = Random.Range(20, 100);
+                int value = Random.Range(20, 300);
                 GameParame.I.Unagi += value;
                 GetDigItem.I.Open("電気ウナギを" + value + "匹掘り当てた");
                 break;
 
 
             case DigItem.Money:
-                int money = Random.Range(20, 100);
+                int money = Random.Range(1, 500);
                 GameParame.I.Money += money;//適当
                 GetDigItem.I.Open("鉱石を掘り当てた！" + money + "枚レナリウス銀貨を手に入れた");
                 break;
