@@ -263,7 +263,7 @@ public class Facility : MonoBehaviour
         facilitybase = new onsen();
         onsen onsen = (onsen)facilitybase;
         onsen.powerPlant = powerPlant;
-        onsen.Start();
+        onsen.Start(this);
         SetFaciltyType(FacilityType.PublicBath);
         return true;
 
@@ -292,7 +292,7 @@ public class Facility : MonoBehaviour
         GameParame.I.Money -= GameParame.I.AquacultureCost;
         SetFaciltyType(FacilityType.Aquaculture);
         facilitybase = new Farms();
-        facilitybase.Start();
+        facilitybase.Start(this);
     }
 
     public void CreatePowerPlant()
@@ -309,6 +309,6 @@ public class Facility : MonoBehaviour
         facilitybase = new PowerPlant();
         PowerPlant power = (PowerPlant)facilitybase;
         power.m_facility = slider;
-        power.Start();
+        power.Start(this);
     }
 }

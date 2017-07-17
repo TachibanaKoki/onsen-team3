@@ -13,10 +13,11 @@ public class onsen : FacilityBase
     private int m_currntMoneyNum;
     private const float m_addMoneyTime = 0.5f;
     // Use this for initialization
-    public override void Start ()
+    public override void Start (Facility fac)
     {
         m_addMoneyCount = 0;
         m_currntMoneyNum = 0;
+        base.Start(fac);
             
 	}
 	
@@ -27,8 +28,8 @@ public class onsen : FacilityBase
         if (m_addMoneyCount > m_addMoneyTime)
         {
             if (powerPlant.m_ChageUnagi <= 0) return;
-            powerPlant.m_ChageUnagi -= 1;
-            m_currntMoneyNum += addvalue;
+            powerPlant.RemoveUnagi(3);
+            m_currntMoneyNum += addvalue*facility.GreadLevel;
             GameParame.I.Money += m_currntMoneyNum;
             SoundManager.m_instance.CoinGetSound();
             m_addMoneyCount = 0;
