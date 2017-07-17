@@ -51,16 +51,14 @@ public class GameSystem : MonoBehaviour
 
     float nowTime;
     const float digTime = 5f;//5秒ごとに
-    const float practiceTime = 30.0f;
+    const float practiceTime = 20.0f;
 
     //時間がたったらボタンが押せます
     bool canPush;
     public bool CanPush
     {
         get {
-            //    return canPush;
-            return true;
-
+            return canPush;
         }
     }
 
@@ -118,6 +116,7 @@ public class GameSystem : MonoBehaviour
                 {
                     nowTime = 0;
                     isAuto = false;
+                    MessageSystem.I.SetMessage("今日の営業は終了だ");
                     canPush = true;
                 }
 

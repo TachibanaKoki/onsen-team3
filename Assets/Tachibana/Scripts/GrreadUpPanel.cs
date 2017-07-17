@@ -112,8 +112,9 @@ public class GrreadUpPanel : MonoBehaviour
         if (Advertisement.IsReady("rewardedVideo"))
         {
             var option = new ShowOptions { resultCallback = ShowResultAd };
+            Advertisement.Show("rewardedVideo",option);
         }
-        Advertisement.Show();
+
 #endif
     }
 #if UNITY_ANDROID
@@ -132,8 +133,9 @@ public class GrreadUpPanel : MonoBehaviour
                 Panel.raycastTarget = false;
                 GreadUp();
                 break;
+                
         }
-
+        Panel.raycastTarget = false;
     }
 #endif
 }
