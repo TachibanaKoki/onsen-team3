@@ -6,11 +6,12 @@ public class Farms : FacilityBase
 {
 
     // Use this for initialization
-    public override void Start()
+    public override void Start(Facility fac)
     {
         m_addUnagiCount = 0;
         m_currntUnagiNum = 0;
         GameSystem.I.practiceCallback += AddUnagi;
+        base.Start(fac);
     }
 
     // Update is called once per frame
@@ -27,7 +28,7 @@ public class Farms : FacilityBase
 
     public void AddUnagi()
     {
-        GameParame.I.Unagi += 30;
+        GameParame.I.Unagi += 30*facility.GreadLevel;
     }
 
     private float m_addUnagiCount;

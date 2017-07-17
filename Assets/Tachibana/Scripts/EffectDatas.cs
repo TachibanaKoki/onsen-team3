@@ -11,6 +11,7 @@ public class EffectDatas : MonoBehaviour
     public GameObject TextEffecrt;
     public GameObject BreakeEffect;
     public GameObject DigBreakeEffect;
+    public GameObject Megami;
 
     // Use this for initialization
     void Start ()

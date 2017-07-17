@@ -6,6 +6,7 @@ public class Menu : MonoBehaviour
 {
     [SerializeField]
     GameObject MenuContent;
+
 	// Use this for initialization
 	public void Open()
     {
@@ -15,12 +16,11 @@ public class Menu : MonoBehaviour
 
     public void TitleBack()
     {
-        SceneManager.LoadSceneAsync("Title");
+        Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Title");
     }
 
     public void Clese()
     {
         MenuContent.SetActive(false);
-        SoundManager.m_instance.PlaySE("SE_backbutton", 1.0f);
     }
 }

@@ -47,10 +47,13 @@ public class Facility : MonoBehaviour
 
 
     GameObject Effect;
+    [SerializeField]
+    GameObject coinEffect;
 
     void Awake()
     {
         m_Image = GetComponent<Image>();
+        coinEffect.SetActive(false);
     }
 
     void Update()
@@ -66,6 +69,14 @@ public class Facility : MonoBehaviour
         else if (GameSystem.I.NowState == GameSystem.GameState.Practice)
         {
             facilitybase.Update();
+            if (facilityType == FacilityType.PublicBath)
+            {
+                onsen o = facilitybase as onsen;
+                if (o.IsPractice)
+                {
+                    coinEffect.SetActive(true);
+                }
+            }
         }
         else if (GameSystem.I.NowState == GameSystem.GameState.dig)
         {
@@ -85,10 +96,12 @@ public class Facility : MonoBehaviour
 
             }
 
+            coinEffect.SetActive(false);
         }
-
-
-
+        else
+        {
+            coinEffect.SetActive(false);
+        }
 
         if (Effect != null)
         {
@@ -111,6 +124,7 @@ public class Facility : MonoBehaviour
     public void GreadUP()
     {
         GreadLevel++;
+        m_Image.sprite = FacilityManager.I.GetFacilityImage(facilityType,GreadLevel);
     }
 
     // Use this for initialization
@@ -121,20 +135,12 @@ public class Facility : MonoBehaviour
 
     }
 
-    public void SetFaciltyType(FacilityType facType)
+    public void SetFaciltyType(FacilityType facType,int level = 1)
     {
         m_Image.color = Color.white;
-        if (facType == FacilityType.PublicBath)
+        if (facType == FacilityType.PublicBath||facType==FacilityType.PowerPlant|| facType==FacilityType.Aquaculture)
         {
-            m_Image.sprite = FacilityManager.I.m_PublicBath;
-        }
-        else if (facType == FacilityType.PowerPlant)
-        {
-            m_Image.sprite = FacilityManager.I.m_PowerPlant;
-        }
-        else if (facType == FacilityType.Aquaculture)
-        {
-            m_Image.sprite = FacilityManager.I.m_Aquaculture;
+            m_Image.sprite = FacilityManager.I.GetFacilityImage(facType,level);
         }
         else if (facType == FacilityType.Dig)
         {
@@ -154,6 +160,8 @@ public class Facility : MonoBehaviour
 
     public void TapArea()
     {
+        // これが建築した時の音がなる関数
+        SoundManager.m_instance.CraftFacilitySound();
         //todo 施設開拓中
         if (GameSystem.I.NowState == GameSystem.GameState.Installation)
         {
@@ -295,7 +303,7 @@ public class Facility : MonoBehaviour
         facilitybase = new onsen();
         onsen onsen = (onsen)facilitybase;
         onsen.powerPlant = powerPlant;
-        onsen.Start();
+        onsen.Start(this);
         SetFaciltyType(FacilityType.PublicBath);
         return true;
 
@@ -334,7 +342,7 @@ public class Facility : MonoBehaviour
         GameParame.I.Money -= GameParame.I.AquacultureCost;
         SetFaciltyType(FacilityType.Aquaculture);
         facilitybase = new Farms();
-        facilitybase.Start();
+        facilitybase.Start(this);
     }
 
     public void CreatePowerPlant()
@@ -351,6 +359,6 @@ public class Facility : MonoBehaviour
         facilitybase = new PowerPlant();
         PowerPlant power = (PowerPlant)facilitybase;
         power.m_facility = slider;
-        power.Start();
+        power.Start(this);
     }
 }

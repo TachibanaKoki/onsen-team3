@@ -7,8 +7,12 @@ public class SceneTransration : MonoBehaviour {
 
     public void SceneLoad()
     {
-        SoundManager.m_instance.PlaySE("SE_startbutton", 1.0f);
         SceneManager.LoadSceneAsync("main");
+    }
+
+    public void LoadScene(string name)
+    {
+        Camera.main.GetComponent<SceenFade>().LoadSceenWithFade(name);
     }
 
 }
