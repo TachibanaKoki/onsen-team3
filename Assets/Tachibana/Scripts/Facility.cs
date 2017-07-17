@@ -128,6 +128,8 @@ public class Facility : MonoBehaviour
 
     public void TapArea()
     {
+        // これが建築した時の音がなる関数
+        SoundManager.m_instance.CraftFacilitySound();
         //todo 施設開拓中
         if (GameSystem.I.NowState == GameSystem.GameState.Installation)
         {
