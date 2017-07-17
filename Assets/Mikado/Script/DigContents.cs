@@ -15,10 +15,10 @@ public class DigContents : MonoBehaviour
 
     bool old = false;
 
-     int nowDig = 0;//今どのぐらい掘っているか
+    int nowDig = 0;//今どのぐらい掘っているか
     public int NowDig
     {
-        get { return nowDig+1; }
+        get { return nowDig + 1; }
     }
 
 
@@ -45,6 +45,7 @@ public class DigContents : MonoBehaviour
 
     DigItem[] digItemList = new DigItem[c_maxDig];
 
+
     //Use this for initialization
 
     void Start()
@@ -62,14 +63,14 @@ public class DigContents : MonoBehaviour
         {
             case GameSystem.GameState.Installation:
             case GameSystem.GameState.Practice:
-                if (facilityObjectParent.GetComponent<Facility>().facilityType != FacilityType.None && facilityObjectParent.GetComponent<Facility>().facilityType != FacilityType.Dig&& facilityObjectParent.GetComponent<Facility>().facilityType != FacilityType.DigSet)
+                if (facilityObjectParent.GetComponent<Facility>().facilityType != FacilityType.None && facilityObjectParent.GetComponent<Facility>().facilityType != FacilityType.Dig && facilityObjectParent.GetComponent<Facility>().facilityType != FacilityType.DigSet)
                     Destroy(this);
                 old = true;
                 break;
 
 
             case GameSystem.GameState.dig:
-                if (old == true&&canDig==true)//掘って獲得
+                if (old == true && canDig == true)//掘って獲得
                 {
                     Dig();
                     old = false;
@@ -87,33 +88,35 @@ public class DigContents : MonoBehaviour
     private void Dig()
     {
         nowDig++;
-            switch ((DigItem)digItemList[nowDig])
-            {
-                case DigItem.None:
-                    break;
+        switch ((DigItem)digItemList[nowDig])
+        {
+            case DigItem.None:
+                break;
 
-                case DigItem.Unagi:
-                    GameParame.I.Unagi += Random.Range(20, 100);
-                    break;
-
-
-                case DigItem.Money:
-                    GameParame.I.Money += Random.Range(20, 100);//適当
-                    break;
+            case DigItem.Unagi:
+                int value = Random.Range(20, 100);
+                GameParame.I.Unagi += value;
+                GetDigItem.I.Open("電気ウナギを" + value + "匹掘り当てた");
+                break;
 
 
-                case DigItem.Megami://後でつけよう。。
-                    break;
+            case DigItem.Money:
+                int money = Random.Range(20, 100);
+                GameParame.I.Money += money;//適当
+                GetDigItem.I.Open("鉱石を掘り当てた！" + money + "枚レナリウス銀貨を手に入れた");
+                break;
 
-                default:
-                    Debug.Log("掘るアイテムで例外");
 
-                    break;
+            case DigItem.Megami://後でつけよう。。
+                GetDigItem.I.Open("女神を掘り当てた！");
+                break;
 
-            }
+            default:
+                Debug.Log("掘るアイテムで例外");
+                GetDigItem.I.Open("何も掘れなかった");
+                break;
 
-        
-
+        }
     }
 
     public void SetDigState(DigItem digItem)

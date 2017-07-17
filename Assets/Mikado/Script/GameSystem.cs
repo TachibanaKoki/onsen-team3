@@ -51,7 +51,7 @@ public class GameSystem : MonoBehaviour
 
     float nowTime;
     const float digTime = 5f;//5秒ごとに
-    const float practiceTime = 30.0f;
+    const float practiceTime = 1.0f;
 
     //時間がたったらボタンが押せます
     bool canPush;
