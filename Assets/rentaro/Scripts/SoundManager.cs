@@ -6,7 +6,8 @@ public class SoundManager : MonoBehaviour {
 
     public static SoundManager m_instance;
 
-    private string cueSheetName = "SE";
+    private string cueSheetSEName = "SE";
+    private string cueSheetBGMName = "BGM";
     private CriAtomSource atomSourceSE;
     private CriAtomSource atomSourceBGM;
 
@@ -14,10 +15,10 @@ public class SoundManager : MonoBehaviour {
     void Start ()
     {
         atomSourceSE = gameObject.AddComponent<CriAtomSource>();
-        atomSourceSE.cueSheet = cueSheetName;
+        atomSourceSE.cueSheet = cueSheetSEName;
 
         atomSourceBGM = gameObject.AddComponent<CriAtomSource>();
-        atomSourceBGM.cueSheet = cueSheetName;
+        atomSourceBGM.cueSheet = cueSheetBGMName;
 	}
 
     void Awake()
@@ -30,13 +31,60 @@ public class SoundManager : MonoBehaviour {
         m_instance = this;
     }
 
-    /**
-     * @param [in] 鳴らしたいサウンド名
-     * @param [in] 0.0f～1.0fまでの間で音量調整
-     */
-    public void PlaySE(string SeName_, float volume_)
+    public enum BGMKind
     {
-        atomSourceSE.volume = volume_;
-        atomSourceSE.Play(SeName_);
+        EINGYO,
+        UNEI,
+
+    }
+
+    public void ClickSound()
+    {
+        atomSourceSE.androidUseLowLatencyVoicePool = true;
+        atomSourceSE.Play("SE_okbutton");
+    }
+
+    public void BackButtonSound()
+    {
+        atomSourceSE.androidUseLowLatencyVoicePool = true;
+        atomSourceSE.Play("SE_backbutton");
+    }
+
+    public void CraftFacilitySound()
+    {
+        atomSourceSE.androidUseLowLatencyVoicePool = true;
+        atomSourceSE.Play("SE_constraction 1");
+    }
+
+    public void OnButtonSoound()
+    {
+        atomSourceSE.androidUseLowLatencyVoicePool = true;
+        atomSourceSE.Play("SE_mouseover");
+    }
+
+    public void EigyoBGM()
+    {
+        atomSourceBGM.Play("bgm_eigyou_min");
+    }
+
+    public void ClicStartButton()
+    {
+        atomSourceSE.androidUseLowLatencyVoicePool = true;
+        atomSourceSE.Play("SE_startbutton");
+    }
+
+    public void PauseBGM()
+    {
+        atomSourceBGM.Pause(true);
+    }
+
+    public void ResumeBGM()
+    {
+        atomSourceBGM.Pause(false);
+    }
+
+    public void StopBGM()
+    {
+        atomSourceBGM.Stop();
     }
 }

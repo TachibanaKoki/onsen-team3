@@ -293,8 +293,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e631c3b9947b54c823c6853a05529c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playOnStart: 0
-  _cueName: SE_startbutton
+  _playOnStart: 1
+  _cueName: bgm_title_min
   _cueSheet: 
   _use3dPositioning: 1
   _loop: 0
@@ -433,11 +433,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acfFile: onsenSound.acf
   cueSheets:
+  - name: BGM
+    acbFile: BGM.acb
+    awbFile: BGM.awb
   - name: SE
     acbFile: SE.acb
     awbFile: 
   dspBusSetting: 
-  dontDestroyOnLoad: 0
+  dontDestroyOnLoad: 1
   dontRemoveExistsCueSheet: 0
 --- !u!4 &732883910
 Transform:
@@ -709,8 +712,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.7205882, g: 1, b: 0.9364097, a: 1}
-    m_PressedColor: {r: 1, g: 0.43382353, b: 0.43382353, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -730,6 +733,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1560621480}
         m_MethodName: SceneLoad
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 436772140}
+        m_MethodName: ClicStartButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
