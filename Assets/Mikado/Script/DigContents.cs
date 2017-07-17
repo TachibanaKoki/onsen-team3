@@ -110,6 +110,7 @@ public class DigContents : MonoBehaviour
 
             case DigItem.Megami://後でつけよう。。
                 GetDigItem.I.Open("女神を掘り当てた！");
+                GameObject.Instantiate(EffectDatas.I.Megami,transform);
                 break;
 
             default:

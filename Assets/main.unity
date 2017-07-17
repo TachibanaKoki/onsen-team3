@@ -376,6 +376,7 @@ MonoBehaviour:
     type: 2}
   BreakeEffect: {fileID: 1913925421250580, guid: 76da7c3ce71602040bbe3ee34a1f9166,
     type: 2}
+  Megami: {fileID: 1743304106276902, guid: 262b6fa747b4c5f4b94386b86355387e, type: 2}
 --- !u!4 &158376746
 Transform:
   m_ObjectHideFlags: 0
