@@ -372,7 +372,7 @@ MonoBehaviour:
     type: 2}
   elect: {fileID: 1359992907256754, guid: 610eb655adcf2184db6d9f7df4f6295b, type: 2}
   onsenSmoke: {fileID: 1601209699025726, guid: 3dad08f272a9c204a807ed86a0cd4793, type: 2}
-  TextEffecrt: {fileID: 1075518474340360, guid: f2994bcb4a9c82148b01f095c043aa15,
+  TextEffecrt: {fileID: 1199360432520596, guid: 0f0c43c84cdf23541bd497a1c29fa63d,
     type: 2}
   BreakeEffect: {fileID: 1913925421250580, guid: 76da7c3ce71602040bbe3ee34a1f9166,
     type: 2}
@@ -585,7 +585,9 @@ MonoBehaviour:
   m_facilityPrefab: {fileID: 1572261318754268, guid: 7ab6a93684d8cba4db18846019ba7eca,
     type: 2}
   m_PublicBath:
+  - {fileID: 21300000, guid: 716aeda0dd8f0e749baa6321949f885a, type: 3}
   - {fileID: 21300000, guid: 9db9de93bd7aa7647af1c09f5915c4be, type: 3}
+  - {fileID: 21300000, guid: db5c1664add7d4449aaf51f20f838aac, type: 3}
   m_Aquaculture:
   - {fileID: 21300000, guid: 15aec0736c8f49b4d99e6db8bb1d9820, type: 3}
   - {fileID: 21300000, guid: 576edb5fa923c054bb27e0944656ceca, type: 3}

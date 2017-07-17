@@ -47,10 +47,13 @@ public class Facility : MonoBehaviour
 
 
     GameObject Effect;
+    [SerializeField]
+    GameObject coinEffect;
 
     void Awake()
     {
         m_Image = GetComponent<Image>();
+        coinEffect.SetActive(false);
     }
 
     void Update()
@@ -58,6 +61,14 @@ public class Facility : MonoBehaviour
         if (GameSystem.I.NowState == GameSystem.GameState.Practice)
         {
             facilitybase.Update();
+            if (facilityType == FacilityType.PublicBath)
+            {
+                onsen o = facilitybase as onsen;
+                if (o.IsPractice)
+                {
+                    coinEffect.SetActive(true);
+                }
+            }
         }
         else if (GameSystem.I.NowState == GameSystem.GameState.dig)
         {
@@ -67,10 +78,12 @@ public class Facility : MonoBehaviour
                 facilityType = FacilityType.Dig;
                 SetFaciltyType(FacilityType.Dig);
             }
+            coinEffect.SetActive(false);
         }
-
-
-   
+        else
+        {
+            coinEffect.SetActive(false);
+        }
 
         if(Effect!=null)
         {

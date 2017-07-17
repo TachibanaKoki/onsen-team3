@@ -12,6 +12,12 @@ public class onsen : FacilityBase
     private float m_addMoneyCount;
     private int m_currntMoneyNum;
     private const float m_addMoneyTime = 0.5f;
+    GameObject effect;
+
+    public bool IsPractice
+    {
+        get { return powerPlant.m_ChageUnagi <= 0; }
+    }
     // Use this for initialization
     public override void Start (Facility fac)
     {
